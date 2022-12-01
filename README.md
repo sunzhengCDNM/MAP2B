@@ -58,7 +58,14 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
  
    `source activate MAP2B-2022`
    
-   Every time you need to run MAP2B, please make sure the conda environment of MAP2B has been activated by running the above command. Now everything is ready for MAP2B :), Let's get started.
+   Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
+
+ * Run the following command to download the preconstructed unique 2b tag database:
+ 
+   `perl scripts/Download_MAP2B_DB_GTDB.pl database`
+   
+   Resuming from a breakpoint is supported during database download.  
+   Now, everything is ready for MAP2B :), Let's get started.
  
 ## Using MAP2B
  
