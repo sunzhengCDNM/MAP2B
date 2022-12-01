@@ -69,7 +69,22 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
  
 ## Using MAP2B
  
-The main script for implementing those analyses is `bin/MAP2B.py` in this repo. You can check out the usage by printing the help information via `python3 bin/MAP2B.py -h`.
+### Quick start
+MAP2B is a highly automatic pipeline, and only a few parameters are required for the pipeline.
+* We prepared a real pair-end sequencing data of a MOCK community:  
+ 
+   `mkdir -p data/`  
+   `wget -t 0 -O data/shotgun_MSA-1002_1.fq.gz https://figshare.com/ndownloader/files/38346149/shotgun_MSA-1002_1.fq.gz`  
+   `wget -t 0 -O data/shotgun_MSA-1002_2.fq.gz https://figshare.com/ndownloader/files/38346155/shotgun_MSA-1002_2.fq.gz`  
+ 
+* After downloading the sequencing data, we can finally run MAP2B:  
+ 
+   `python3 ../bin/MAP2B.py -i data.list`
+
+    In `data.list` you can learn how to prepare your input data.
+
+### Parameters
+The main program is `bin/MAP2B.py` in this repo. You can check out the usage by printing the help information via `python3 bin/MAP2B.py -h`.
 
 ```
 usage: MAP2B.py [-h] -i INPUT [-e ENZYME] [-d DATABASE] [-p PROCESSES]
@@ -93,25 +108,13 @@ mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
 Last update: 2022/11/22 11:21:47
 version:  1.0.0
 ```
-### Quick start
-MAP2B is a highly automatic pipeline, and only a few parameters are required for the pipeline.
-* We prepared a real pair-end sequencing data of a MOCK community:  
- 
-   `mkdir -p data/`  
-   `wget -t 0 -O data/shotgun_MSA-1002_1.fq.gz https://figshare.com/ndownloader/files/38346149/shotgun_MSA-1002_1.fq.gz`  
-   `wget -t 0 -O data/shotgun_MSA-1002_2.fq.gz https://figshare.com/ndownloader/files/38346155/shotgun_MSA-1002_2.fq.gz`  
- 
-* After downloading the sequencing data, we can finally run MAP2B:  
- 
-   `python3 ../bin/MAP2B.py -i data.list`
-
-    In `data.list` you can learn how to prepare your input data.
 
 ## Reference
- * Sun, Z., Huang, S., Zhu, P. et al. Species-resolved sequencing of low-biomass or degraded microbiomes using 2bRAD-M. Genome Biol 23, 36 (2022). https://doi.org/10.1186/s13059-021-02576-9  
- * Sun, Z., Huang, S., Zhang, M. et al. Challenges in benchmarking metagenomic profilers. Nat Methods 18, 618–626 (2021). https://doi.org/10.1038/s41592-021-01141-3  
  * Wang, S., Meyer, E., McKay, J. et al. 2b-RAD: a simple and flexible method for genome-wide genotyping. Nat Methods 9, 808–810 (2012). https://doi.org/10.1038/nmeth.2023  
  * Wang, S., Liu, P., Lv, J. et al. Serial sequencing of isolength RAD tags for cost-efficient genome-wide profiling of genetic and epigenetic variations. Nat Protoc 11, 2189–2200 (2016). https://doi.org/10.1038/nprot.2016.133  
- 
+ * Sun, Z., Huang, S., Zhang, M. et al. Challenges in benchmarking metagenomic profilers. Nat Methods 18, 618–626 (2021). https://doi.org/10.1038/s41592-021-01141-3  
+ * Sun, Z., Huang, S., Zhu, P. et al. Species-resolved sequencing of low-biomass or degraded microbiomes using 2bRAD-M. Genome Biol 23, 36 (2022). https://doi.org/10.1186/s13059-021-02576-9  
+ * Zheng Sun, Jiang Liu, Meng Zhang, Tong Wang, Shi Huang, Scott T. Weiss, Yang-Yu Liu. bioRxiv 2022.10.24.513546. https://doi.org/10.1101/2022.10.24.513546  
+
 ## Acknowledgement
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
