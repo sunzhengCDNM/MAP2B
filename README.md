@@ -73,6 +73,7 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
 MAP2B is a highly automatic pipeline, and only a few parameters are required for the pipeline.
 * We prepared a real pair-end sequencing data of a MOCK community:  
  
+   `cd example`  
    `mkdir -p data/`  
    `wget -t 0 -O data/shotgun_MSA-1002_1.fq.gz https://figshare.com/ndownloader/files/38346149/shotgun_MSA-1002_1.fq.gz`  
    `wget -t 0 -O data/shotgun_MSA-1002_2.fq.gz https://figshare.com/ndownloader/files/38346155/shotgun_MSA-1002_2.fq.gz`  
@@ -81,7 +82,14 @@ MAP2B is a highly automatic pipeline, and only a few parameters are required for
  
    `python3 ../bin/MAP2B.py -i data.list`
 
-    In `data.list` you can learn how to prepare your input data.
+    In `data.list` you can learn how to prepare your input data, both single-end and paired-end data can be used as input.  
+    
+```
+sample1<tab>shotgun1_left.fastq(.gz)<tab>shotgun1_right.fastq(.gz)
+sample2<tab>shotgun2_left.fastq(.gz)<tab>shotgun2_right.fastq(.gz)
+sample3 ...
+
+```
 
 ### Parameters
 The main program is `bin/MAP2B.py` in this repo. You can check out the usage by printing the help information via `python3 bin/MAP2B.py -h`.
