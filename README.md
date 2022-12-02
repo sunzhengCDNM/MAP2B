@@ -56,7 +56,7 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
  * Activate the MAP2B conda environment by running the following command:
  
-   `source activate MAP2B-2022`
+   `source activate MAP2B-2022` or `conda activate MAP2B-2022`
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
