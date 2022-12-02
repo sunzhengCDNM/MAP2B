@@ -88,7 +88,6 @@ MAP2B is a highly automatic pipeline, and only a few parameters are required for
 sample1<tab>shotgun1_left.fastq(.gz)<tab>shotgun1_right.fastq(.gz)
 sample2<tab>shotgun2_left.fastq(.gz)<tab>shotgun2_right.fastq(.gz)
 sample3 ...
-
 ```
 
 ### Parameters
