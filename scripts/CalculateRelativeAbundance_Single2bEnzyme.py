@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 ########################################## import ################################################
-import argparse, os, sys, re, random, glob, gzip, multiprocessing
+import argparse, os, sys, re, random, glob, gzip
 from datetime import datetime
+from concurrent.futures import ProcessPoolExecutor
 from math import *
 bindir = os.path.abspath(os.path.dirname(__file__))
 ############################################ ___ #################################################
@@ -11,7 +12,6 @@ __mail__ = 'jiang.liu@oebiotech.com'
 __date__ = '2022/11/20 02:31:28'
 __version__ = '1.0.0'
 ############################################ main ##################################################
-#lock = threading.Lock()
 def report(level,info):
 	date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	if level == "ERROR":
@@ -127,16 +127,18 @@ def main():
 
 # qual
 	report('INFO', 'Start qualitative analysis using {} processes'.format(args.processes))
-	pool = multiprocessing.Pool(args.processes) # multiprocessing 
+	executor = ProcessPoolExecutor(args.processes)
+	pool = []
 	with open(check_file(args.list), 'r') as IN:
 		for line in IN:
 			line = line.strip()
 			if line.startswith('#') or not line:continue
 			tmp = line.split('\t')
 			outdir = check_dir('{}/{}'.format(args.output, tmp[0]))
-			pool.apply_async(qual, (outdir, tmp[0], tmp[1]))
-	pool.close()
-	pool.join()
+			pool.append(executor.submit(qual, outdir, tmp[0], tmp[1]))
+	executor.shutdown()
+	for res in pool:
+		res.result()
 	report('INFO', 'End of qualitative analysis')
 
 if __name__=="__main__":
