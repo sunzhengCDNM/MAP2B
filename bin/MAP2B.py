@@ -1,7 +1,8 @@
 #!/data/software/install/miniconda3/envs/python.3.7.0/bin/python3
 ########################################## import ################################################
-import argparse, os, sys, re, random, glob, gzip, multiprocessing
+import argparse, os, sys, re, random, glob, gzip
 from datetime import datetime
+from concurrent.futures import ProcessPoolExecutor
 src_dir = os.path.abspath(os.path.dirname(__file__) + '/../scripts')
 def_db_dir = os.path.abspath(os.path.dirname(__file__) + '/../database')
 tools_dir = os.path.abspath(os.path.dirname(__file__) + '/../tools')
@@ -119,6 +120,7 @@ def main():
 	[4]BaeI   [8]PsrI  [12]HaeIV   [16]BslFI',dest='enzyme',type=int,default=13)
 	parser.add_argument('-d',help='Database path for MAP2B pipeline, default {}'.format(def_db_dir),dest='database',type=str,default=def_db_dir)
 	parser.add_argument('-p',help='Number of processes, note that more threads may require more memory, default 1',dest='processes',type=int,default=1)
+	parser.add_argument('-g',help='Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none',dest='gscore',type=int,required=False)
 	
 	args=parser.parse_args()
 
@@ -132,33 +134,46 @@ def main():
 	enzyme_dir = check_dir(O + '/0.dige')
 
 	done_file = O + '/0.dige/done'
+	enzyme_smp_file = O + '/0.dige/enzyme_smp.list'
 	if os.path.exists(done_file):
 		report('INFO', 'The data digestion has been completed, go to the next step')
 	else:
 		report('INFO', 'Start of data digestion')
 		check_dir(O + '/0.dige')
-		enzyme_smp_file = O + '/0.dige/enzyme_smp.list'
-		pool = multiprocessing.Pool(args.processes)
+		executor = ProcessPoolExecutor(args.processes)
+		pool = []
 		with open(enzyme_smp_file, 'w') as OUT:
 			for smp, reads in data_dic.items():
 				OUT.write('{smp}\t{enzyme_dir}/{smp}/{smp}.{enzyme}.fa.gz\n'.format(enzyme_dir = enzyme_dir, smp = smp, enzyme = enzyme))
-				pool.apply_async(extra_tag, (reads, args.enzyme, (enzyme_dir + '/' + smp), smp))
-		pool.close()
-		pool.join()
+				pool.append(executor.submit(extra_tag, reads, args.enzyme, (enzyme_dir + '/' + smp), smp))
+		executor.shutdown()
+		for res in pool:
+			res.result()
 		exe_shell('touch {}'.format(done_file))
 
-
-	done_file = O + '/1.qual/done'
-	none_spe_smp_list = []
+	done_file = O + '/1.qual/done_q'
+	
 	if os.path.exists(done_file):
 		report('INFO', 'The qualitative analysis has been completed, go to the next step')
 	else:
 		report('INFO', 'Start qualitative analysis')
 		check_dir(O + '/1.qual')
 		cc_abd('{}/{}.species.uniq'.format(db_dir, enzyme), '{}/abfh_classify_with_speciename.txt.gz'.format(db_dir), enzyme_smp_file, O + '/1.qual', args.processes, enzyme)
+		exe_shell('touch {}'.format(done_file))
+
+	done_file = O + '/1.qual/done_p'
+	none_spe_smp_list = []
+	if os.path.exists(done_file):
+		report('INFO', 'The predictive analysis has been completed, go to the next step')
+	else:
+		report('INFO', 'Start predictive analysis')
+		check_dir(O + '/1.qual')
 		for smp in data_dic.keys():
 			try:
-				exe_shell('python3 {src_dir}/MAP2B_ML.py -i {O}/1.qual/{smp}/{smp}.{enzyme}.xls -o {O}/1.qual/{smp}/pred.result'.format(src_dir = src_dir, O = O, smp = smp, enzyme= enzyme))
+				if args.gscore:
+					exe_shell('python3 {src_dir}/gscore_filter.py -i {O}/1.qual/{smp}/{smp}.{enzyme}.xls -o {O}/1.qual/{smp}/pred.result -g {gscore}'.format(src_dir = src_dir, O = O, smp = smp, enzyme= enzyme, gscore = args.gscore))
+				else:
+					exe_shell('python3 {src_dir}/MAP2B_ML.py -i {O}/1.qual/{smp}/{smp}.{enzyme}.xls -o {O}/1.qual/{smp}/pred.result'.format(src_dir = src_dir, O = O, smp = smp, enzyme= enzyme))
 			except:
 				report('INFO', 'If an error is reported there, it may be due to the absence of microorganisms, so please ignore it')
 				none_spe_smp_list.append(smp)
@@ -182,15 +197,17 @@ def main():
 	else:
 		report('INFO', 'Start quantitative database building')
 		check_dir(O + '/2.mkdb')
-		pool = multiprocessing.Pool(args.processes)
+		executor = ProcessPoolExecutor(args.processes)
+		pool = []
 		for smp in quan_smp_set:
 			quan_db = '{O}/2.mkdb/{smp}'.format(O = O, smp = smp)
 			check_dir(quan_db)
 			with open('{}/reads.list'.format(quan_db), 'w') as OUT:
 				OUT.write('{smp}\t{enzyme_dir}/{smp}/{smp}.{enzyme}.fa.gz\n'.format(enzyme_dir = enzyme_dir, smp = smp, enzyme = enzyme))
-			pool.apply_async(mkdb, (db_dir, enzyme, smp, quan_db, O))
-		pool.close()
-		pool.join()
+			pool.append(executor.submit(mkdb, db_dir, enzyme, smp, quan_db, O))
+		executor.shutdown()
+		for res in pool:
+			res.result()
 		exe_shell('touch {}'.format(done_file))
 
 	done_file = O + '/3.quan/done'
@@ -200,11 +217,13 @@ def main():
 	else:
 		report('INFO', 'Start quantitative analysis')
 		check_dir(O + '/3.quan')
-		pool = multiprocessing.Pool(args.processes)
+		executor = ProcessPoolExecutor(args.processes)
+		pool = []
 		for smp in quan_smp_set:
-			pool.apply_async(cc_abd, ('{}/2.mkdb/{}/{}.CjePI'.format(O, smp, smp), '{}/abfh_classify_with_speciename.txt.gz'.format(db_dir), '{}/2.mkdb/{}/reads.list'.format(O, smp), O + '/3.quan', 1, enzyme))
-		pool.close()
-		pool.join()
+			pool.append(executor.submit(cc_abd, '{}/2.mkdb/{}/{}.CjePI'.format(O, smp, smp), '{}/abfh_classify_with_speciename.txt.gz'.format(db_dir), '{}/2.mkdb/{}/reads.list'.format(O, smp), O + '/3.quan', 1, enzyme))
+		executor.shutdown()
+		for res in pool:
+			res.result()
 		with open(abd_list, 'w') as OUT:
 			for smp in quan_smp_set: 
 				OUT.write('{}\t{}/3.quan/{}/{}.{}.xls\n'.format(smp, O, smp, smp, enzyme))
