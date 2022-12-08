@@ -99,20 +99,21 @@ usage: MAP2B.py [-h] -i INPUT [-e ENZYME] [-d DATABASE] [-p PROCESSES]
 
 optional arguments:
   -h, --help    show this help message and exit
-  -i INPUT      The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like 
+  -i INPUT      The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. The line in this file that begins with # will be ignored. 
                   sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
+  -o OUTPUT     Output directory, default ./MAP2B_result
   -e ENZYME     enzyme, default 13 for CjePI, choose from
                   [1]CspCI  [5]BcgI  [9]BplI     [13]CjePI  [17]AllEnzyme
                   [2]AloI   [6]CjeI  [10]FalI    [14]Hin4I
                   [3]BsaXI  [7]PpiI  [11]Bsp24I  [15]AlfI
                   [4]BaeI   [8]PsrI  [12]HaeIV   [16]BslFI
-  -d DATABASE   Database path for MAP2B pipeline, default MAP2B/database
+  -d DATABASE   Database path for MAP2B pipeline, MAP2B/database
   -p PROCESSES  Number of processes, note that more threads may require more memory, default 1
-  -o OUTPUT     Output directory, ./MAP2B_result
+  -g GSCORE     Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none
 
 author: Liu Jiang, Zheng Sun
 mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
-Last update: 2022/11/22 11:21:47
+Last update: 2022/12/08 11:21:47
 version:  1.0.0
 ```
 
