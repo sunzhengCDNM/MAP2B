@@ -50,8 +50,8 @@ def check_db(db, ez):
 	t = 0
 	if not os.path.exists(f'{db}/{ez}.species.fa.gz'):
 		t = 1
-	if not os.path.exists(f'{db}/{ez}.species.stat.xls'):
-		t = 1
+#	if not os.path.exists(f'{db}/{ez}.species.stat.xls'):
+#		t = 1
 	if not os.path.exists(f'{db}/{ez}.species.uniq.fa.gz'):
 		t = 1
 	if not os.path.exists(f'{db}/{ez}.species.uniq.stat.xls'):
@@ -101,7 +101,7 @@ def extra_tag(reads, enzyme, enzyme_dir, smp):
 	if len(reads) == 2:
 		exe_shell('perl {src_dir}/2bRADExtraction.pl -i {reads} -t 2 -s {enzyme} -od {enzyme_dir} -op {smp}_1 -qc no'.format(src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp))
 		exe_shell('perl {src_dir}/2bRADExtraction.pl -i {reads} -t 2 -s {enzyme} -od {enzyme_dir} -op {smp}_2 -qc no'.format(src_dir = src_dir, reads = reads[1], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp))
-		exe_shell('cat {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_1.{enzyme}.fa.gz >{enzyme_dir}/{smp}.{enzyme}.fa.gz && rm {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz'.format(enzyme = enzyme_dic[enzyme], enzyme_dir = enzyme_dir, smp = smp))
+		exe_shell('cat {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz >{enzyme_dir}/{smp}.{enzyme}.fa.gz && rm {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz'.format(enzyme = enzyme_dic[enzyme], enzyme_dir = enzyme_dir, smp = smp))
 	else:
 		exe_shell('perl {src_dir}/2bRADExtraction.pl -i {reads} -t 2 -s {enzyme} -od {enzyme_dir} -op {smp} -qc no'.format(src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp))
 	return
@@ -220,7 +220,7 @@ def main():
 		executor = ProcessPoolExecutor(args.processes)
 		pool = []
 		for smp in quan_smp_set:
-			pool.append(executor.submit(cc_abd, '{}/2.mkdb/{}/{}.CjePI'.format(O, smp, smp), '{}/abfh_classify_with_speciename.txt.gz'.format(db_dir), '{}/2.mkdb/{}/reads.list'.format(O, smp), O + '/3.quan', 1, enzyme))
+			pool.append(executor.submit(cc_abd, '{}/2.mkdb/{}/{}.{}'.format(O, smp, smp, enzyme), '{}/abfh_classify_with_speciename.txt.gz'.format(db_dir), '{}/2.mkdb/{}/reads.list'.format(O, smp), O + '/3.quan', 1, enzyme))
 		executor.shutdown()
 		for res in pool:
 			res.result()
