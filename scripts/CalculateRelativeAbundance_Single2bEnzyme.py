@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ########################################## import ################################################
-import argparse, os, sys, re, random, glob, gzip
+import argparse, os, sys, re, random, glob, gzip, marisa_trie
 from datetime import datetime
 from concurrent.futures import ProcessPoolExecutor
 from math import *
@@ -10,7 +10,7 @@ __doc__ = ''
 __author__ = 'Liu Jiang'
 __mail__ = 'jiang.liu@oebiotech.com'
 __date__ = '2022/11/20 02:31:28'
-__version__ = '1.0.0'
+__version__ = '2.1.0'
 ############################################ main ##################################################
 def report(level,info):
 	date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -42,20 +42,26 @@ def check_dir(dir):
 def qual(outdir, smp, fasta):
 	report('INFO', f"for sample {smp}")
 	transtable = str.maketrans('ATGCN', 'TACGN')
-	gcf_count_dic = {} # {gcf:{tag:[1, 1]}}
+	gcf_count_dic = {} # {gcf:{tag:seq_num}}
+	tag_count_dic = {} # {tag:seq_num}
+	# 读取fa，对tag进行去重复及统计
 	with gzip.open(check_file(fasta), 'rt') as IN:
 		for line in IN:
 			if line.startswith('>'):continue
 			seq_1 = line.strip()
 			seq_2 = seq_1[::-1].translate(transtable)
-			if seq_1 in tag_gcf_dic:
-				for gcf in tag_gcf_dic[seq_1]:
-					tag_count_dic = gcf_count_dic.setdefault(gcf, {})
-					tag_count_dic[seq_1] = tag_count_dic.get(seq_1, 0) + 1
-			elif seq_2 in tag_gcf_dic:
-				for gcf in tag_gcf_dic[seq_2]:
-					tag_count_dic = gcf_count_dic.setdefault(gcf, {})
-					tag_count_dic[seq_2] = tag_count_dic.get(seq_2, 0) + 1
+			tag_count_dic[seq_1] = tag_count_dic.get(seq_1, 0) + 1
+			tag_count_dic[seq_2] = tag_count_dic.get(seq_2, 0) + 1
+
+	for tag, tag_num in tag_count_dic.items():
+		try:
+			for j in tag_gcf_trie[tag]:
+				gcf = ''.join([str(i, 'utf-8') for i in j])
+				tag_count_tmp_dic = gcf_count_dic.setdefault(gcf, {})
+				tag_count_tmp_dic[tag] = tag_num
+		except:
+			continue
+
 	tax_tag_count_dic = {} # {tax:tag_num}
 	tax_reads_count_dic = {} # {tax:reads_num}
 	with open(f"{outdir}/{smp}.{enzyme}.GCF_detected.xls", 'w') as OUT:
@@ -87,7 +93,7 @@ def main():
 	parser.add_argument('-o',help='output dir',dest='output',type=str,required=True)
 	parser.add_argument('-p',help='number of processes used',dest='processes',type=int,default=1)
 	args=parser.parse_args()
-	global enzyme, gcf_theo_tag_num_dic, tax_theo_tag_num_dic, gcf_tax_dic, tag_gcf_dic
+	global enzyme, gcf_theo_tag_num_dic, tax_theo_tag_num_dic, gcf_tax_dic, tag_gcf_trie
 
 # reading classify file
 	report('INFO', 'Start reading classify file')
@@ -102,16 +108,10 @@ def main():
 
 # reading database
 	report('INFO', 'Start reading the database')
-	tag_gcf_dic = {} # {tag: [gcf]}
-	db_file = check_file(args.database + '.fa.gz')
+	db_file = check_file(args.database + '.marisa')
 	stat_file = check_file(args.database + '.stat.xls')
 	enzyme = args.enzyme
-	with gzip.open(db_file, 'rt') as IN:
-		for line in IN:
-			if line.startswith('>'):
-				gcf = line.rstrip().lstrip('>').split('|')[0]
-			else:
-				tag_gcf_dic.setdefault(line.strip(), []).append(gcf)
+	tag_gcf_trie = marisa_trie.RecordTrie('8c').mmap(db_file)
 
 # reading stat file
 	gcf_theo_tag_num_dic = {} # {gcf: uniq_tag_num}
