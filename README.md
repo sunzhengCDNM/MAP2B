@@ -28,7 +28,7 @@ Instead of directly estimating the relative abundances of the species through al
  #### Dependencies
 All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B is recommended in a conda environment. This program could work properly in the Unix systems, or Mac OSX, as all required packages can be appropreiately download and installed.  
  #### Memory usage
-**> 120G RAM** is required to run this pipeline.  
+**> 14G RAM** is required to run this pipeline.  
  ### Download the pipeline
  * Clone the latest version from GitHub (recommended):  
  
@@ -50,9 +50,9 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    `conda update conda`
    
-   Once you have conda installed, create a conda environment with the yml file `tools/MAP2B-20221128-conda.yml`.
+   Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20221128-conda.yml`.
    
-   `conda env create -n MAP2B-2022 --file tools/MAP2B-20221128-conda.yml`
+   `conda env create -n MAP2B-2022 --file config/MAP2B-20221128-conda.yml`
    
  * Activate the MAP2B conda environment by running the following command:
  
@@ -62,7 +62,7 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
 
  * Run the following command to download the preconstructed unique 2b tag database:
  
-   `perl scripts/Download_MAP2B_DB_GTDB.pl database`
+   `python3 scripts/DownloadDB.py -l config/CjePI.database.list -d database`
    
    Resuming from a breakpoint is supported during database download.  
    Now, everything is ready for MAP2B :), Let's get started.
@@ -85,8 +85,8 @@ MAP2B is a highly automatic pipeline, and only a few parameters are required for
     In `data.list` you can learn how to prepare your input data, both single-end and paired-end data can be used as input.  
     
 ```
-sample1<tab>shotgun1_left.fastq(.gz)<tab>shotgun1_right.fastq(.gz)
-sample2<tab>shotgun2_left.fastq(.gz)<tab>shotgun2_right.fastq(.gz)
+sample1 <tab> shotgun1_left.fastq(.gz) <tab> shotgun1_right.fastq(.gz)
+sample2 <tab> shotgun2.fastq(.gz)
 sample3 ...
 ```
 
@@ -94,19 +94,14 @@ sample3 ...
 The main program is `bin/MAP2B.py` in this repo. You can check out the usage by printing the help information via `python3 bin/MAP2B.py -h`.
 
 ```
-usage: MAP2B.py [-h] -i INPUT [-e ENZYME] [-d DATABASE] [-p PROCESSES]
-                [-o OUTPUT]
+usage: MAP2B.py [-h] -i INPUT [-o OUTPUT] [-d DATABASE] [-p PROCESSES]
+                [-g GSCORE]
 
 optional arguments:
   -h, --help    show this help message and exit
   -i INPUT      The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. The line in this file that begins with # will be ignored. 
                   sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
   -o OUTPUT     Output directory, default ./MAP2B_result
-  -e ENZYME     enzyme, default 13 for CjePI, choose from
-                  [1]CspCI  [5]BcgI  [9]BplI     [13]CjePI  [17]AllEnzyme
-                  [2]AloI   [6]CjeI  [10]FalI    [14]Hin4I
-                  [3]BsaXI  [7]PpiI  [11]Bsp24I  [15]AlfI
-                  [4]BaeI   [8]PsrI  [12]HaeIV   [16]BslFI
   -d DATABASE   Database path for MAP2B pipeline, MAP2B/database
   -p PROCESSES  Number of processes, note that more threads may require more memory, default 1
   -g GSCORE     Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none
@@ -114,7 +109,7 @@ optional arguments:
 author: Liu Jiang, Zheng Sun
 mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
 Last update: 2022/12/08 11:21:47
-version:  1.0.0
+version:  1.3.0
 ```
 
 ## Reference
@@ -126,3 +121,14 @@ version:  1.0.0
 
 ## Acknowledgement
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
+
+## What's new
+### Version 1.3.0 2023-01-17 by Jiang
+* We have simplified our database and modified the main body program to speed up the execution time
+* MAP2B is laptop friendly now! The minimum RAM required is only 14G and the space for the database is reduced to ~15G
+* Cancel `-e` option
+
+### Version 1.2.0 2022-12-02 by Zheng and Jiang
+* Minor bug fixes
+* You can set up a G score `-g` directly and ignore the false positive recognition model
+* Coverage information will be generated together with the abundance table
