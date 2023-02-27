@@ -1,4 +1,4 @@
-#!/data/software/install/miniconda3/envs/python.3.7.0/bin/python3
+#!python3
 ########################################## import ################################################
 import argparse, os, sys, re, random, glob
 from datetime import datetime
@@ -62,7 +62,7 @@ def main():
 				pred = 0
 			OUT.write('{spe}\t{gscore}\t{pred}\t{pred}\n'.format(spe = tmp[6], gscore = tmp[-1], pred = pred))
 	if n == 0:
-		report('ERROR', 'No microorganisms were found in this sample')
+		report('ERROR', 'No microorganisms were found in this sample: {}'.format(args.input.split('/')[-1].split('.')[0]))
 
 if __name__=="__main__":
 	main()
