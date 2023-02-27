@@ -57,7 +57,11 @@ def main():
 			cov_list = []
 			for smp in smp_list:
 				try:
-					cov_list.append(info_dic[smp][spe])
+					if float(info_dic[smp][spe]) > 1:
+						cov = '1'
+					else:
+						cov = info_dic[smp][spe]
+					cov_list.append(cov)
 				except:
 					cov_list.append('0')
 			OUT.write('{}\t{}\n'.format(spe, '\t'.join(cov_list)))
