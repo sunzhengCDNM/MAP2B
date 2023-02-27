@@ -16,7 +16,7 @@ __doc__ = ''
 __author__ = 'Liu Jiang, Zheng Sun'
 __mail__ = 'jiang.liu@oebiotech.com, spzsu@channing.harvard.edu'
 __date__ = '2022/11/22 11:21:47'
-__version__ = '1.3.0'
+__version__ = '1.4'
 ############################################ main ##################################################
 def report(level, info):
 	date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -45,11 +45,11 @@ def check_dir(dir):
 		report("INFO",info)
 	return dir
 
-def check_db(db, enzyme):
-	db_lst = '{config_dir}/{enzyme}.database.list'.format(config_dir = config_dir, enzyme = enzyme)
+def check_db(db, enzyme, source):
+	db_lst = '{config_dir}/{source}.{enzyme}.database.list'.format(config_dir = config_dir, enzyme = enzyme, source = source)
 	t = 0
 	if not os.path.exists(db_lst):
-		report('ERROR', 'The process is incomplete, please go to github (https://github.com/sunzhengCDNM/MAP2B) to reinstall')
+		report('ERROR', 'Unable to find {db_lst}, please go to github (https://github.com/sunzhengCDNM/MAP2B/tree/master/config) to download'.format(db_lst))
 	else:
 		with open(db_lst, 'r') as IN:
 			for line in IN:
@@ -61,7 +61,7 @@ def check_db(db, enzyme):
 					t = 1
 	if t == 1:
 		report('INFO', 'Downloading database, due to network reasons, may take a long time, please wait')
-		exe_shell('python3 {src_dir}/DownloadDB.py -l {config_dir}/{enzyme}.database.list -d {db_dir}'.format(src_dir = src_dir, db_dir = db, config_dir = config_dir, enzyme = enzyme), 'DownloadDB')
+		exe_shell('python3 {src_dir}/DownloadDB.py -l {config_dir}/{source}.{enzyme}.database.list -d {db_dir}'.format(src_dir = src_dir, db_dir = db, config_dir = config_dir, enzyme = enzyme, source = source), 'DownloadDB')
 	return
 
 def exe_shell(cmd, desc=None):
@@ -78,8 +78,8 @@ def exe_shell(cmd, desc=None):
 		else:
 			report('ERROR', 'failed to run: {}'.format(cmd))
 
-def mkdb(db_dir, enzyme, smp, quan_db, O):
-	exe_shell('python3 {src_dir}/creatQuanDB.py -d {db}/{enzyme}.species -c {db}/abfh_classify_with_speciename.txt.gz -p {O}/1.qual/{smp}/pred.result -o {quan_db}/{smp}.{enzyme} -e {enzyme} -t 26000'.format(src_dir = src_dir, db = db_dir, enzyme = enzyme, smp = smp, quan_db = quan_db, O = O), 'creatQuanDB')
+def mkdb(db_dir, enzyme, smp, quan_db, O, cutoff):
+	exe_shell('python3 {src_dir}/creatQuanDB.py -d {db}/{enzyme}.species -c {db}/abfh_classify_with_speciename.txt.gz -p {O}/1.qual/{smp}/pred.result -o {quan_db}/{smp}.{enzyme} -e {enzyme} -s {cutoff} -n m'.format(src_dir = src_dir, db = db_dir, enzyme = enzyme, smp = smp, quan_db = quan_db, O = O, cutoff = cutoff), 'creatQuanDB')
 	return
 
 def check_data(data_file):
@@ -118,21 +118,25 @@ def main():
 	parser.add_argument('-i',help='The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like \n \
 	sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)',dest='input',type=str,required=True)
 	parser.add_argument('-o',help='Output directory, default {}/MAP2B_result'.format(os.getcwd()),dest='output',type=str,default='{}/MAP2B_result'.format(os.getcwd()))
+#	parser.add_argument('-e',help='Enzyme, choose from 5(BcgI) or 13(CjePI), default 13',dest='enzyme',type=int,choices=[5, 13],default=13)
 #	parser.add_argument('-e',help='enzyme, default 13 for CjePI, choose from\n \
 #	[1]CspCI  [5]BcgI  [9]BplI     [13]CjePI  [17]AllEnzyme\n \
 #	[2]AloI   [6]CjeI  [10]FalI    [14]Hin4I\n \
 #	[3]BsaXI  [7]PpiI  [11]Bsp24I  [15]AlfI\n \
 #	[4]BaeI   [8]PsrI  [12]HaeIV   [16]BslFI',dest='enzyme',type=int,default=13)
+	parser.add_argument('-s',help='Data source, choose from GTDB or RefSeq, default GTDB',dest='source',type=str,choices=['GTDB', 'RefSeq'],default='GTDB')
 	parser.add_argument('-d',help='Database path for MAP2B pipeline, default {}'.format(def_db_dir),dest='database',type=str,default=def_db_dir)
 	parser.add_argument('-p',help='Number of processes, note that more threads may require more memory, default 1',dest='processes',type=int,default=1)
 	parser.add_argument('-g',help='Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none',dest='gscore',type=int,required=False)
-	
+	parser.add_argument('-c',help='cut off for database, default 30000',dest='cutoff',type=int,default=30000)
+
 	args=parser.parse_args()
-	enzyme_id = 13  # args.enzyme
+#	enzyme_id = args.enzyme
+	enzyme_id = 13
 	enzyme = enzyme_dic[enzyme_id]
-	db_dir = check_dir(args.database)
+	db_dir = check_dir((args.database + '/' + args.source))
 	# check database
-	check_db(db_dir, enzyme)
+	check_db(db_dir, enzyme, args.source)
 	O = check_dir(args.output)
 	# prepare data
 	data_dic = check_data(check_file(args.input))
@@ -158,7 +162,6 @@ def main():
 		exe_shell('touch {}'.format(done_file), 'dige_done')
 
 	done_file = O + '/1.qual/done_q'
-	
 	if os.path.exists(done_file):
 		report('INFO', 'The qualitative analysis has been completed, go to the next step')
 	else:
@@ -210,7 +213,7 @@ def main():
 			check_dir(quan_db)
 			with open('{}/reads.list'.format(quan_db), 'w') as OUT:
 				OUT.write('{smp}\t{enzyme_dir}/{smp}/{smp}.{enzyme}.fa.gz\n'.format(enzyme_dir = enzyme_dir, smp = smp, enzyme = enzyme))
-			pool.append(executor.submit(mkdb, db_dir, enzyme, smp, quan_db, O))
+			pool.append(executor.submit(mkdb, db_dir, enzyme, smp, quan_db, O, args.cutoff))
 		executor.shutdown()
 		for res in pool:
 			res.result()
