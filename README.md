@@ -102,14 +102,15 @@ optional arguments:
   -i INPUT      The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. The line in this file that begins with # will be ignored. 
                   sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
   -o OUTPUT     Output directory, default ./MAP2B_result
-  -d DATABASE   Database path for MAP2B pipeline, MAP2B/database
+  -s {GTDB,RefSeq}  Data source, choose from GTDB or RefSeq, default GTDB
+  -d DATABASE   Database path for MAP2B pipeline, MAP2B_path/database
   -p PROCESSES  Number of processes, note that more threads may require more memory, default 1
   -g GSCORE     Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none
 
 author: Liu Jiang, Zheng Sun
 mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
-Last update: 2022/12/08 11:21:47
-version:  1.3.0
+Last update: 2023/02/27 11:31:47
+version:  1.4
 ```
 
 ## Reference
@@ -123,12 +124,16 @@ version:  1.3.0
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
-### Version 1.3.0 2023-01-17 by Jiang
+### Version 1.4 2023-02-27 by Jiang
+* Add optional database: GTDB or RefSeq
+* Minor bug fixes
+
+### Version 1.3 2023-01-17 by Jiang
 * We have simplified our database and modified the main body program to speed up the execution time
 * MAP2B is laptop friendly now! The minimum RAM required is only 14G and the space for the database is reduced to ~15G
 * Cancel `-e` option
 
-### Version 1.2.0 2022-12-02 by Zheng and Jiang
+### Version 1.2 2022-12-02 by Zheng and Jiang
 * Minor bug fixes
 * You can set up a G score `-g` directly and ignore the false positive recognition model
 * Coverage information will be generated together with the abundance table
