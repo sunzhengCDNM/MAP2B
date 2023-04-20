@@ -52,11 +52,11 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20230420-conda.yml`.
    
-   `conda env create -n MAP2B.1.5 --file config/MAP2B-20230420-conda.yml`
+   `conda create -n MAP2B.1.5 --file config/MAP2B-20230420-conda.yml`
    
  * Activate the MAP2B conda environment by running the following command:
  
-   `source activate MAP2B.1.5` or `conda activate MAP2B.1.5`
+   `conda activate MAP2B.1.5` or `source activate MAP2B.1.5`
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
