@@ -50,21 +50,26 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    `conda update conda`
    
-   Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20221128-conda.yml`.
+   Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20230420-conda.yml`.
    
-   `conda env create -n MAP2B1.4 --file config/MAP2B-20221128-conda.yml`
+   `conda env create -n MAP2B.1.5 --file config/MAP2B-20230420-conda.yml`
    
  * Activate the MAP2B conda environment by running the following command:
  
-   `source activate MAP2B1.4` or `conda activate MAP2B1.4`
+   `source activate MAP2B.1.5` or `conda activate MAP2B.1.5`
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
- * Run the following command to download the preconstructed unique 2b tag database:
+ * At the start of the workflow, the database will be checked, and if it does not exist, the corresponding database will be automatically downloaded to the software installation path. This process may take some time. However, you can also separately download the GTDB database and RefSeq database using the following commands:
  
-   `python3 scripts/DownloadDB.py -l config/CjePI.database.list -d database`
-   
-   Resuming from a breakpoint is supported during database download.  
+   (**A**) for GTDB database
+ 
+      `python3 scripts/DownloadDB.py -l config/GTDB.CjePI.database.list -d database/GTDB`
+	   
+   (**B**) for RefSeq database
+	 
+      `python3 scripts/DownloadDB.py -l config/RefSeq.CjePI.database.list -d database/RefSeq`
+    
    Now, everything is ready for MAP2B :), Let's get started.
  
 ## Using MAP2B
@@ -109,8 +114,8 @@ optional arguments:
 
 author: Liu Jiang, Zheng Sun
 mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
-Last update: 2023/02/27 11:31:47
-version:  1.4
+last update: 2023/04/20 20:03:47
+version:  1.5
 ```
 
 ## Reference
@@ -124,6 +129,9 @@ version:  1.4
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
+### Version 1.5 2023-04-20 by Jiang
+* Minor bug fixes
+
 ### Version 1.4 2023-02-27 by Jiang
 * Add optional database: GTDB or RefSeq
 * Minor bug fixes
