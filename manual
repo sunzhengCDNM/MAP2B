@@ -1,10 +1,9 @@
 1.install software
-  conda env create -n MAP2B.2022 --file config/MAP2B-20220823-conda.yml
-  conda activate MAP2B.2022
+  conda env create -n MAP2B.1.5 --file config/MAP2B-20230420-conda.yml
+  conda activate MAP2B.1.5
 
 2.start pipeline(example)
   cd example && python3 ../bin/MAP2B.py -i data.list -p 2
 
 Note:
-  You need to activate the environment each time you use it. (conda activate MAP2B.2022)
-
+  You need to activate the environment each time you use it. (conda activate MAP2B.1.5)
