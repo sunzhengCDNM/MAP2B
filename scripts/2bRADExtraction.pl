@@ -268,16 +268,16 @@ if( 1 == $site ){#CspCI
 my $raw_reads_num=0;# check # of raw reads 如果涉及到拼接，shotgun双端 需要单独记录拼接前的reads数目
 
 if($#input==0 && $type==1 && $#outprefix==0){# reference genome(s)
-	print STDOUT "COMMAND: perl $0 -i $input[0] -t 1 -s $site -od $outdir -op $outprefix[0] -gz $gz\n";
+#	print STDOUT "COMMAND: perl $0 -i $input[0] -t 1 -s $site -od $outdir -op $outprefix[0] -gz $gz\n";
 	print STDOUT "Electronic enzyme digestion of input genome(s) -- Start, ",`date`;
 	&Electronic_enzyme;
 	print STDOUT "Electronic enzyme digestion of input genome(s) -- End, ",`date`;
 }elsif($#input==0 && $type==2 && $#outprefix==0){# single-end reads from shotgun metagenomics
-	if($q_control eq "yes"){# need QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format\n";
-	}else{#no QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -fm $format\n";
-	}
+#	if($q_control eq "yes"){# need QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format\n";
+#	}else{#no QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -fm $format\n";
+#	}
 	print STDOUT "Tags extraction from shotgun metagenomics data -- Start, ",`date`;
 	&fastq;
 	print STDOUT "Tags extraction from shotgun metagenomics data -- End, ",`date`;
@@ -287,11 +287,11 @@ if($#input==0 && $type==1 && $#outprefix==0){# reference genome(s)
 #		print STDERR "Can not find software $pear\n";
 #		exit 1;
 #	}
-	if($q_control eq "yes"){# need QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format -pe $pear -pc $pear_cpu\n";
-	}else{# no QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -fm $format -pe $pear -pc $pear_cpu\n";
-	}
+#	if($q_control eq "yes"){# need QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format -pe $pear -pc $pear_cpu\n";
+#	}else{# no QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 2 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -fm $format -pe $pear -pc $pear_cpu\n";
+#	}
 	print STDOUT "Tags extraction from shotgun metagenomics data -- Start, ",`date`;
 	&pear; # Merge the paired-end reads using PEAR. PEAR is a very fast and accurate software tool to merge paired-end reads from next-generation sequencing experiments.
 	$input[0]="$outdir/$outprefix[0].$enzyme.pear.fastq.gz";
@@ -299,11 +299,11 @@ if($#input==0 && $type==1 && $#outprefix==0){# reference genome(s)
 	&execute("rm -f $outdir/$outprefix[0].$enzyme.pear.fastq.gz");
 	print STDOUT "Tags extraction from shotgun metagenomics data -- End, ",`date`;
 }elsif($#input==0 && $type==3 && $#outprefix==0){# single iso-RAD tags
-	if($q_control eq "yes"){# need QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] -t 3 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format\n";
-	}else{#no QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] -t 3 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -fm $format\n";
-	}
+#	if($q_control eq "yes"){# need QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] -t 3 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format\n";
+#	}else{#no QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] -t 3 -s $site -od $outdir -op $outprefix[0] -gz $gz -qc $q_control -fm $format\n";
+#	}
 	print STDOUT "Data Split for single isoRAD tags from SE Platform  -- Start, ",`date`;
 	&Single_Lable;
 	print STDOUT "Data Split for Single isoRAD tags from SE Platform -- End, ",`date`;
@@ -313,11 +313,11 @@ if($#input==0 && $type==1 && $#outprefix==0){# reference genome(s)
 #		print STDERR "Can not find $pear\n";
 #		exit 1;
 #	}
-	if($q_control eq "yes"){# need QC
-		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 4 -s $site -od $outdir -op ",join(" ",@outprefix[0..4])," -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format -pe $pear -pc $pear_cpu\n";
-	}else{#不需要质控
-		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 4 -s $site -od $outdir -op ",join(" ",@outprefix[0..4])," -gz $gz -qc $q_control -fm $format -pe $pear -pc $pear_cpu\n";
-	}
+#	if($q_control eq "yes"){# need QC
+#		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 4 -s $site -od $outdir -op ",join(" ",@outprefix[0..4])," -gz $gz -qc $q_control -n $ncount -q $quality -p $percent -b $qbase -fm $format -pe $pear -pc $pear_cpu\n";
+#	}else{#不需要质控
+#		print STDOUT "COMMAND: perl $0 -i $input[0] $input[1] -t 4 -s $site -od $outdir -op ",join(" ",@outprefix[0..4])," -gz $gz -qc $q_control -fm $format -pe $pear -pc $pear_cpu\n";
+#	}
 	print STDOUT "Data split for five concatenated isoRAD tags from PE platform   -- Start, ",`date`;
 	&Five_Lable;
 	print STDOUT "Data split for five concatenated isoRAD tags from PE platform  -- End, ",`date`;

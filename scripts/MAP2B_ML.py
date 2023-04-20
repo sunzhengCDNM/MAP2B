@@ -46,7 +46,7 @@ def main():
 		formatter_class=argparse.RawTextHelpFormatter,
 		epilog='author:\t{0}\nmail:\t{1}\ndate:\t{2}\nversion:\t{3}'.format(__author__,__mail__,__date__,__version__))
 	parser.add_argument('-i',help='test set (input file), qual or (qual + tag), allow to use *',dest='input',type=str,required=True)
-	parser.add_argument('-m',help='module file, default RF_none_0238.v2.pkl',dest='module',type=str,default='{}/../tools/RF_none_0238.v2.pkl'.format(bindir))
+	parser.add_argument('-m',help='module file, default RF_none_0238.v2.pkl',dest='module',type=str,default='{}/../config/RF_none_0238.v2.pkl'.format(bindir))
 	parser.add_argument('-y',help='output type: 1 for sub_spe, 2 for sub_spe to spe, 3 for sub_spe to spe to sub_spe, default 1',dest='type',choices=[1, 2, 3], type=int, default=1)
 	parser.add_argument('-o',help='predicted result (output file)',dest='output',type=str,required=False)
 	parser.add_argument('-t',help='the threshold for filtering through Gscore, default 5',dest='threshold',type=int,default=5)
