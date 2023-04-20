@@ -62,11 +62,11 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
 
  * At the start of the workflow, the database will be checked, and if it does not exist, the corresponding database will be automatically downloaded to the software installation path. This process may take some time. However, you can also separately download the GTDB database and RefSeq database using the following commands:
  
-   (**A**) for GTDB database
+   * for GTDB database
  
       `python3 scripts/DownloadDB.py -l config/GTDB.CjePI.database.list -d database/GTDB`
 	   
-   (**B**) for RefSeq database
+   * for RefSeq database
 	 
       `python3 scripts/DownloadDB.py -l config/RefSeq.CjePI.database.list -d database/RefSeq`
     
