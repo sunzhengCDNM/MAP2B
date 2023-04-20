@@ -15,8 +15,8 @@ enzyme_dic = {1:'CspCI', 2:'AloI', 3:'BsaXI', 4:'BaeI',
 __doc__ = ''
 __author__ = 'Liu Jiang, Zheng Sun'
 __mail__ = 'jiang.liu@oebiotech.com, spzsu@channing.harvard.edu'
-__date__ = '2022/11/22 11:21:47'
-__version__ = '1.4'
+__date__ = '2023/04/20 20:03:47'
+__version__ = '1.5'
 ############################################ main ##################################################
 def report(level, info):
 	date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -49,7 +49,7 @@ def check_db(db, enzyme, source):
 	db_lst = '{config_dir}/{source}.{enzyme}.database.list'.format(config_dir = config_dir, enzyme = enzyme, source = source)
 	t = 0
 	if not os.path.exists(db_lst):
-		report('ERROR', 'Unable to find {db_lst}, please go to github (https://github.com/sunzhengCDNM/MAP2B/tree/master/config) to download'.format(db_lst))
+		report('ERROR', 'Unable to find {db_lst}, please go to github (https://github.com/sunzhengCDNM/MAP2B/tree/master/config) to download'.format(db_lst = db_lst))
 	else:
 		with open(db_lst, 'r') as IN:
 			for line in IN:
@@ -114,7 +114,7 @@ def extra_tag(reads, enzyme, enzyme_dir, smp):
 def main():
 	parser=argparse.ArgumentParser(description=__doc__,
 		formatter_class=argparse.RawTextHelpFormatter,
-		epilog='author:\t{0}\nmail:\t{1}\ndate:\t{2}\nversion:\t{3}'.format(__author__,__mail__,__date__,__version__))
+		epilog='author:\t{0}\nmail:\t{1}\nlast update:\t{2}\nversion:\t{3}'.format(__author__,__mail__,__date__,__version__))
 	parser.add_argument('-i',help='The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like \n \
 	sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)',dest='input',type=str,required=True)
 	parser.add_argument('-o',help='Output directory, default {}/MAP2B_result'.format(os.getcwd()),dest='output',type=str,default='{}/MAP2B_result'.format(os.getcwd()))
