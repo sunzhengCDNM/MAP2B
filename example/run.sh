@@ -1,4 +1,4 @@
-# conda activate MAP2B-2022
+# conda activate MAP2B.1.5
 # pre data
 mkdir -p data/ && \
 wget -t 3 -O data/shotgun_MSA-1002_1.fq.gz https://figshare.com/ndownloader/files/38346149/shotgun_MSA-1002_1.fq.gz && \
