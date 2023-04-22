@@ -60,7 +60,7 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
- * At the start of the workflow, the database will be checked, and if it does not exist, the corresponding database will be automatically downloaded to the software installation path. This process may take some time. However, you can also separately download the GTDB database and RefSeq database using the following commands:
+ * The workflow begins by checking the database's existence, and if it is not found, the corresponding database will be downloaded automatically to the software installation path. This download process may take some time, but it ensures that the necessary databases are readily available for the workflow. Alternatively, you can also download the GTDB database and RefSeq database independently using the following commands:
  
    * for GTDB database
  
