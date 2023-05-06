@@ -129,14 +129,14 @@ version:  1.5
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
-### Version 1.5 2023-04-20 by Jiang
+### Version 1.5 2023-04-20 by Zheng and Jiang
 * Minor bug fixes
 
-### Version 1.4 2023-02-27 by Jiang
+### Version 1.4 2023-02-27 by Zheng and Jiang
 * Add optional database: GTDB or RefSeq
 * Minor bug fixes
 
-### Version 1.3 2023-01-17 by Jiang
+### Version 1.3 2023-01-17 by Zheng and Jiang
 * We have simplified our database and modified the main body program to speed up the execution time
 * MAP2B is laptop friendly now! The minimum RAM required is only 14G and the space for the database is reduced to ~15G
 * Cancel `-e` option
