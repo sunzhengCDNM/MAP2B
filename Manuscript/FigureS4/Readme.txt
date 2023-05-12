@@ -1,0 +1,1 @@
+The raw data gernated by different metagenomic profilers can be found in the folder named "Abd Table", the R code for the heatmap of Figure S can be found in "FigS4.R" using "plot_Corrplot_RM.Mutation_PRF.L2.BC-162_23.0425.txt" as input.

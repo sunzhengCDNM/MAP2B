@@ -1,0 +1,1 @@
+The raw data can be found in "CAMI_50_abundance_change_in_ground_truth_nominmax.xls" (for Fig. S9a, S9d, S9e, S9f), "CAMI_50_abundance_change_in_ground_truth_1W(10W, 100W).zip" (for Fig. S9b, S9c), and the R code for drawing the plot can be found in FigS9.R.
