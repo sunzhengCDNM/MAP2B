@@ -1,0 +1,1 @@
+This directory contains all the images, raw data, and scripts of the MAP2B manuscript, including the figures in both the main text and the supplementary materials. As GitHub has a size limit for single files, a compressed archive of all the data in this directory is provided here.
