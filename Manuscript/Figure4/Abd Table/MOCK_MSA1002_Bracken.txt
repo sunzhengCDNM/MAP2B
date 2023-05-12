@@ -1,0 +1,75 @@
+name	Abd
+Bacillus cereus	0.1353
+Pseudomonas aeruginosa	0.1002
+Clostridium beijerinckii	0.0715
+Rhodobacter sphaeroides	0.0692
+Phocaeicola vulgatus	0.0681
+Escherichia coli	0.0636
+Acinetobacter baumannii	0.0569
+Deinococcus radiodurans	0.0506
+Cutibacterium acnes	0.0386
+Enterococcus faecalis	0.0348
+Staphylococcus epidermidis	0.0343
+Neisseria meningitidis	0.0342
+Staphylococcus aureus	0.0306
+Schaalia odontolytica	0.0295
+Porphyromonas gingivalis	0.0295
+Bifidobacterium adolescentis	0.0265
+Streptococcus mutans	0.0262
+Helicobacter pylori	0.0255
+Lactobacillus gasseri	0.0237
+Streptococcus agalactiae	0.0182
+Bacillus thuringiensis	0.0068
+Bacillus anthracis	0.0048
+Shigella flexneri	0.0029
+Bacillus pacificus	0.0016
+Streptococcus sp. FDAARGOS_522	0.0016
+Homo sapiens	0.0015
+Streptococcus sp. FDAARGOS_521	0.0014
+Shigella boydii	0.0008
+Bacillus mycoides	0.0006
+Bacillus paranthracis	0.0006
+Streptococcus sp. FDAARGOS_520	0.0004
+Acinetobacter sp. FDAARGOS_560	0.0004
+Shigella dysenteriae	0.0004
+Salmonella enterica	0.0004
+Bacillus albus	0.0003
+Bacillus luti	0.0003
+Bacillus wiedmannii	0.0003
+Clostridium sp. MF28	0.0003
+Clostridium diolis	0.0003
+Acinetobacter seifertii	0.0003
+Shigella sonnei	0.0003
+Bacillus tropicus	0.0002
+Bacillus sp. BD59S	0.0002
+Acinetobacter pittii	0.0002
+Methylobacterium sp. C1	0.0002
+Methylobacterium radiotolerans	0.0002
+Phocaeicola dorei	0.0002
+Staphylococcus phage IME1361_01	0.0002
+Bacillus sp. ABP14	0.0001
+Bacillus sp. HBCD-sjtu	0.0001
+Bacillus cytotoxicus	0.0001
+Bacillus pseudomycoides	0.0001
+Bacillus sp. SYJ	0.0001
+Streptococcus sp. 'group B'	0.0001
+Streptococcus dysgalactiae	0.0001
+Streptococcus constellatus	0.0001
+Streptococcus troglodytae	0.0001
+Lactobacillus johnsonii	0.0001
+Clostridium sp. DL-VIII	0.0001
+Clostridium saccharoperbutylacetonicum	0.0001
+Clostridium saccharobutylicum	0.0001
+Schaalia meyeri	0.0001
+Pauljensenia hongkongensis	0.0001
+Pseudomonas resinovorans	0.0001
+Pseudomonas sp. LPH1	0.0001
+Acinetobacter nosocomialis	0.0001
+Acinetobacter calcoaceticus	0.0001
+Escherichia albertii	0.0001
+Escherichia marmotae	0.0001
+Escherichia fergusonii	0.0001
+Salmonella sp. HNK130	0.0001
+Neisseria gonorrhoeae	0.0001
+Neisseria lactamica	0.0001
+Staphylococcus phage 23MRA	0.0001

@@ -1,0 +1,35 @@
+taxName	Abd
+Pseudomonas aeruginosa	0.09299
+Cereibacter sphaeroides	0.06372
+Phocaeicola vulgatus	0.05456
+Clostridium beijerinckii	0.05375
+Bacillus cereus	0.05367
+Deinococcus radiodurans	0.04945
+Cutibacterium acnes	0.03683
+Enterococcus faecalis	0.03377
+Staphylococcus epidermidis	0.03127
+Acinetobacter baumannii	0.0309
+Schaalia odontolytica	0.02877
+Porphyromonas gingivalis	0.02845
+Neisseria meningitidis	0.02759
+Helicobacter pylori	0.02499
+Bifidobacterium adolescentis	0.02481
+Streptococcus mutans	0.02394
+Lactobacillus gasseri	0.02124
+Staphylococcus aureus	0.003415
+Escherichia coli	0.00266
+Homo sapiens	0.001003
+Bacillus thuringiensis	0.0006032
+Streptococcus agalactiae	0.0005164
+Bacillus mycoides	0.0004482
+Bacillus anthracis	0.0003548
+Bacillus wiedmannii	0.0003011
+Bacillus paranthracis	0.0002809
+Bacillus albus	0.0002145
+Bacillus luti	0.0001984
+Schaalia meyeri	0.0001595
+Bacillus pacificus	0.0001507
+Bacillus mobilis	0.0001344
+Bacillus sp. BD59S	0.0001085
+Bacillus nitratireducens	0.0001022
+Acinetobacter seifertii	0.0001001

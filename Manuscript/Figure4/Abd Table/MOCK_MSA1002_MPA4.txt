@@ -1,0 +1,24 @@
+#mpa_vJan21_CHOCOPhlAnSGB_202103
+#/home/gene/sunzheng/miniconda3/envs/MPA4/bin/metaphlan 0_data/MOCK_clean.fq.gz --input_type fastq --tax_lev s --nproc 30 -o 1_Run_Tools/MPA4/MOCK_MPA4.txt
+#SampleID	Metaphlan_Analysis
+#clade_name	NCBI_tax_id	relative_abundance	additional_species
+s__Pseudomonas_aeruginosa	287	8.43303	
+s__Rhodobacter_sphaeroides	1063	8.13139	
+s__Cutibacterium_acnes	1747	7.67061	
+s__Deinococcus_radiodurans	1299	7.6019	
+s__Neisseria_meningitidis	487	7.20104	
+s__Escherichia_coli	562	6.71891	
+s__Acinetobacter_baumannii	470	6.08846	
+s__Helicobacter_pylori	210	5.68429	
+s__Phocaeicola_vulgatus	821	4.8601	
+s__Porphyromonas_gingivalis	837	4.77497	
+s__Bifidobacterium_adolescentis	1680	4.76799	
+s__Isoptericola_variabilis	139208	4.13328	
+s__Streptococcus_mutans	1309	4.01465	
+s__Staphylococcus_epidermidis	1282	3.63009	
+s__Enterococcus_faecalis	1351	3.54071	
+s__Streptococcus_agalactiae	1311	3.11399	
+s__Staphylococcus_aureus	1280	2.83219	
+s__Clostridium_beijerinckii	1520	2.79165	
+s__Bacillus_cereus	1396	2.34715	
+s__Lactobacillus_gasseri	1596	1.66359	

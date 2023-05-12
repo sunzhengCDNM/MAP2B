@@ -1,0 +1,56 @@
+name	Abd
+Pseudomonas aeruginosa	0.0901
+Rhodobacter sphaeroides	0.068
+Phocaeicola vulgatus	0.057
+Bacillus cereus	0.0541
+Deinococcus radiodurans	0.0495
+Clostridium beijerinckii	0.0478
+Cutibacterium acnes	0.037
+Enterococcus faecalis	0.0334
+Staphylococcus epidermidis	0.0309
+Acinetobacter baumannii	0.0302
+Schaalia odontolytica	0.029
+Porphyromonas gingivalis	0.0285
+Neisseria meningitidis	0.027
+Staphylococcus aureus	0.0262
+Helicobacter pylori	0.025
+Bifidobacterium adolescentis	0.0249
+Streptococcus mutans	0.0239
+Lactobacillus gasseri	0.0212
+Escherichia coli	0.0027
+Homo sapiens	0.0014
+Bacillus thuringiensis	0.0011
+Streptococcus agalactiae	0.0007
+Bacillus pacificus	0.0006
+Bacillus anthracis	0.0004
+Bacillus albus	0.0003
+Bacillus luti	0.0003
+Acinetobacter seifertii	0.0003
+Bacillus mycoides	0.0002
+Bacillus wiedmannii	0.0002
+Bacillus paranthracis	0.0002
+Bacillus cytotoxicus	0.0001
+Bacillus pseudomycoides	0.0001
+Bacillus sp. ABP14	0.0001
+Bacillus sp. BD59S	0.0001
+Bacillus sp. SYJ	0.0001
+Lactobacillus johnsonii	0.0001
+Clostridium sp. MF28	0.0001
+Clostridium sp. DL-VIII	0.0001
+Clostridium diolis	0.0001
+Clostridium saccharoperbutylacetonicum	0.0001
+Clostridium saccharobutylicum	0.0001
+Schaalia meyeri	0.0001
+Pauljensenia hongkongensis	0.0001
+Pseudomonas sp. LPH1	0.0001
+Acinetobacter nosocomialis	0.0001
+Acinetobacter pittii	0.0001
+Acinetobacter calcoaceticus	0.0001
+Escherichia albertii	0.0001
+Escherichia marmotae	0.0001
+Escherichia fergusonii	0.0001
+Shigella dysenteriae	0.0001
+Methylobacterium sp. C1	0.0001
+Methylobacterium radiotolerans	0.0001
+Neisseria gonorrhoeae	0.0001
+Phocaeicola dorei	0.0001

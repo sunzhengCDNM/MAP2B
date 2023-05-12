@@ -1,0 +1,1 @@
+Figure 2 is a schematic of the workflow of MAP2B, the raw figure can be found in "Figure2.pptx"
