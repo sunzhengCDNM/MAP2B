@@ -117,7 +117,7 @@ mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
 last update: 2023/04/20 20:03:47
 version:  1.5
 ```
-* If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive.
+* If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
 
 ## Reference
  * Sun, Z., Liu, J., Zhang, M. et al. Eliminate false positives in metagenomic profiling based on type IIB restriction sites. bioRxiv 2022.10.24.513546. https://doi.org/10.1101/2022.10.24.513546  
