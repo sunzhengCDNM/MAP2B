@@ -6,7 +6,7 @@
 ### Why do I need to run MAP2B?
 Accurate species identification and abundance estimation are critical for the interpretation of whole metagenome sequencing (WMS) data. Numerous computational methods, broadly referred to as metagenomic profilers, have been developed to identify species in microbiome samples by classification of sequencing reads and quantification of their relative abundances. Yet, existing metagenomic profilers typically suffer from false-positive identifications and consequently biased relative abundance estimation. Indeed, false positives can be accounted for more than 90% of total identified species. Here, we present a new metagenomic profiler MAP2B to resolve those issues. 
 
-For more details, please see [Eliminate false positives in metagenomic profiling based on type IIB restriction sites](https://www.biorxiv.org/content/10.1101/2022.10.24.513546v1).
+For more details, please see [Eliminate false positives in metagenomic profiling based on type IIB restriction sites](https://www.nature.com/articles/s41467-023-41099-8#citeas).
 
 ## The workflow of MAP2B
 Instead of directly estimating the relative abundances of the species through aligning reads against the whole microbial genome or marker genes as existing metagenomic profilers do, we use the following two-round reads alignment strategy:
@@ -120,7 +120,7 @@ version:  1.5
 * If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
 
 ## Reference
- * Sun, Z., Liu, J., Zhang, M. et al. Eliminate false positives in metagenomic profiling based on type IIB restriction sites. bioRxiv 2022.10.24.513546. https://doi.org/10.1101/2022.10.24.513546  
+ * Sun, Z., Liu, J., Zhang, M. et al. Removal of false positives in metagenomics-based taxonomy profiling via targeting Type IIB restriction sites. Nat Commun 14, 5321 (2023). https://doi.org/10.1038/s41467-023-41099-8  
  * Sun, Z., Huang, S., Zhu, P. et al. Species-resolved sequencing of low-biomass or degraded microbiomes using 2bRAD-M. Genome Biol 23, 36 (2022). https://doi.org/10.1186/s13059-021-02576-9  
  * Sun, Z., Huang, S., Zhang, M. et al. Challenges in benchmarking metagenomic profilers. Nat Methods 18, 618–626 (2021). https://doi.org/10.1038/s41592-021-01141-3  
  * Wang, S., Liu, P., Lv, J. et al. Serial sequencing of isolength RAD tags for cost-efficient genome-wide profiling of genetic and epigenetic variations. Nat Protoc 11, 2189–2200 (2016). https://doi.org/10.1038/nprot.2016.133  
