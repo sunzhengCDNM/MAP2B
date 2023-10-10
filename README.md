@@ -120,11 +120,11 @@ version:  1.5
 * If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
 
 ## Reference
- * Sun, Z., Liu, J., Zhang, M. et al. Removal of false positives in metagenomics-based taxonomy profiling via targeting Type IIB restriction sites. Nat Commun 14, 5321 (2023). https://doi.org/10.1038/s41467-023-41099-8  
- * Sun, Z., Huang, S., Zhu, P. et al. Species-resolved sequencing of low-biomass or degraded microbiomes using 2bRAD-M. Genome Biol 23, 36 (2022). https://doi.org/10.1186/s13059-021-02576-9  
- * Sun, Z., Huang, S., Zhang, M. et al. Challenges in benchmarking metagenomic profilers. Nat Methods 18, 618–626 (2021). https://doi.org/10.1038/s41592-021-01141-3  
- * Wang, S., Liu, P., Lv, J. et al. Serial sequencing of isolength RAD tags for cost-efficient genome-wide profiling of genetic and epigenetic variations. Nat Protoc 11, 2189–2200 (2016). https://doi.org/10.1038/nprot.2016.133  
- * Wang, S., Meyer, E., McKay, J. et al. 2b-RAD: a simple and flexible method for genome-wide genotyping. Nat Methods 9, 808–810 (2012). https://doi.org/10.1038/nmeth.2023  
+ * Sun, Z., Liu, J., Zhang, M. et al. Removal of false positives in metagenomics-based taxonomy profiling via targeting Type IIB restriction sites. **Nat Commun** 14, 5321 (2023). https://doi.org/10.1038/s41467-023-41099-8  
+ * Sun, Z., Huang, S., Zhu, P. et al. Species-resolved sequencing of low-biomass or degraded microbiomes using 2bRAD-M. **Genome Biol** 23, 36 (2022). https://doi.org/10.1186/s13059-021-02576-9  
+ * Sun, Z., Huang, S., Zhang, M. et al. Challenges in benchmarking metagenomic profilers. **Nat Methods** 18, 618–626 (2021). https://doi.org/10.1038/s41592-021-01141-3  
+ * Wang, S., Liu, P., Lv, J. et al. Serial sequencing of isolength RAD tags for cost-efficient genome-wide profiling of genetic and epigenetic variations. **Nat Protoc** 11, 2189–2200 (2016). https://doi.org/10.1038/nprot.2016.133  
+ * Wang, S., Meyer, E., McKay, J. et al. 2b-RAD: a simple and flexible method for genome-wide genotyping. **Nat Methods** 9, 808–810 (2012). https://doi.org/10.1038/nmeth.2023  
 
 ## Acknowledgement
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
