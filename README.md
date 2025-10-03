@@ -52,11 +52,11 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20230420-conda.yml`.
    
-   `conda env create -n MAP2B.1.5 --file config/MAP2B-20230420-conda.yml`
+   `conda env create -n MAP2B.1.6 --file config/MAP2B-20230420-conda.yml`
    
  * Activate the MAP2B conda environment by running the following command:
  
-   `conda activate MAP2B.1.5` or `source activate MAP2B.1.5`
+   `conda activate MAP2B.1.6` or `source activate MAP2B.1.6`
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
@@ -106,16 +106,17 @@ optional arguments:
   -h, --help    show this help message and exit
   -i INPUT      The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. The line in this file that begins with # will be ignored. 
                   sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
+  -e enzyme	5: BcgI, 13 CjepI, default 5
   -o OUTPUT     Output directory, default ./MAP2B_result
   -s {GTDB,RefSeq}  Data source, choose from GTDB or RefSeq, default GTDB
   -d DATABASE   Database path for MAP2B pipeline, MAP2B_path/database
   -p PROCESSES  Number of processes, note that more threads may require more memory, default 1
-  -g GSCORE     Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none
+  -g GSCORE     Using G score as the threshold for species identification, -g 5 is recommended for low-biomass samples. Enabling G score will automatically shutdown false positive recognition model, default none
 
 author: Liu Jiang, Zheng Sun
 mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
-last update: 2023/04/20 20:03:47
-version:  1.5
+last update: 2025/10/01 20:03:47
+version:  1.6
 ```
 * If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
 
@@ -130,6 +131,10 @@ version:  1.5
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
+### Version 1.6 2025-10-02 by Zheng and Jiang
+* Add support for the BcgI enzyme
+* Parameter `-e` is back
+
 ### Version 1.5 2023-04-20 by Zheng and Jiang
 * Minor bug fixes
 
