@@ -1,6 +1,6 @@
 1.install software
-  conda env create -n MAP2B.1.5 --file config/MAP2B-20230420-conda.yml
-  conda activate MAP2B.1.5
+  conda env create -n MAP2B.1.6 --file config/MAP2B-20230420-conda.yml
+  conda activate MAP2B.1.6
 
 2.start pipeline(example)
   cd example && python3 ../bin/MAP2B.py -i data.list -p 2
