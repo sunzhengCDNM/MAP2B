@@ -13,10 +13,10 @@ enzyme_dic = {1:'CspCI', 2:'AloI', 3:'BsaXI', 4:'BaeI',
       14:'Hin4I',15:'AlfI',16:'BslFI'}
 ############################################ ___ #################################################
 __doc__ = ''
-__author__ = 'Liu Jiang, Zheng Sun'
-__mail__ = 'jiang.liu@oebiotech.com, spzsu@channing.harvard.edu'
-__date__ = '2023/04/20 20:03:47'
-__version__ = '1.5'
+__author__ = 'Zheng Sun, Liu Jiang'
+__mail__ = 'spzsu@channing.harvard.edu, jiang.liu@oebiotech.com'
+__date__ = '2025/10/02 20:03:47'
+__version__ = '1.6'
 ############################################ main ##################################################
 def report(level, info):
 	date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -118,7 +118,7 @@ def main():
 	parser.add_argument('-i',help='The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like \n \
 	sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)',dest='input',type=str,required=True)
 	parser.add_argument('-o',help='Output directory, default {}/MAP2B_result'.format(os.getcwd()),dest='output',type=str,default='{}/MAP2B_result'.format(os.getcwd()))
-#	parser.add_argument('-e',help='Enzyme, choose from 5(BcgI) or 13(CjePI), default 13',dest='enzyme',type=int,choices=[5, 13],default=13)
+	parser.add_argument('-e',help='Enzyme, choose from 5(BcgI) or 13(CjePI), default 13',dest='enzyme',type=int,choices=[5, 13],default=13)
 #	parser.add_argument('-e',help='enzyme, default 13 for CjePI, choose from\n \
 #	[1]CspCI  [5]BcgI  [9]BplI     [13]CjePI  [17]AllEnzyme\n \
 #	[2]AloI   [6]CjeI  [10]FalI    [14]Hin4I\n \
@@ -131,8 +131,8 @@ def main():
 	parser.add_argument('-c',help='cut off for database, default 30000',dest='cutoff',type=int,default=30000)
 
 	args=parser.parse_args()
-#	enzyme_id = args.enzyme
-	enzyme_id = 13
+	enzyme_id = args.enzyme
+#	enzyme_id = 13
 	enzyme = enzyme_dic[enzyme_id]
 	db_dir = check_dir((args.database + '/' + args.source))
 	# check database
