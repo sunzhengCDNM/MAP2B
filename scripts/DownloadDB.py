@@ -57,7 +57,7 @@ def check_dbfile(local_file, md5):
 def downloaded_dbfile(url, local_file, md5):
 	for i in range(3):
 		try:
-			os.system('wget -t 3 -O {local_file} {url}'.format(local_file = local_file, url = url))
+			os.system('wget --user-agent="Mozilla/5.0" -t 3 -O {local_file} {url}'.format(local_file = local_file, url = url))
 			if check_dbfile(local_file, md5):
 				return True
 			else:
