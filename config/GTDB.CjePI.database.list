@@ -1,15 +1,17 @@
 # taxonomy
-abfh_classify_with_speciename.txt.gz	https://figshare.com/ndownloader/files/58465354/abfh_classify_with_speciename.txt.gz	e19ca68e033690a71753b609a3b63110
+abfh_classify_with_speciename.txt.gz	https://figshare.com/ndownloader/files/59371214/abfh_classify_with_speciename.txt.gz	55ddac6a94bf269a9a236d6888f1193c
+
 # main db
-CjePI.species.marisa30000	https://figshare.com/ndownloader/files/58465393/CjePI.species.marisa30000	763d96ce6df7580a9b86de80d61c48f7
-CjePI.species.marisa60000	https://figshare.com/ndownloader/files/58465399/CjePI.species.marisa60000	2e929718ab2e690d32de5ebba35ee2c8
-CjePI.species.marisa90000	https://figshare.com/ndownloader/files/58465396/CjePI.species.marisa90000	c225ce5c07ad4671e51c578fa30abaa8
-CjePI.species.marisa120000	https://figshare.com/ndownloader/files/58465390/CjePI.species.marisa120000	8e9d801107a434a3fc6b999a69bcc530
-CjePI.species.marisa150000	https://figshare.com/ndownloader/files/58465402/CjePI.species.marisa150000	1e817004425eeb0ce662cb2236cff54a
-CjePI.species.marisa180000	https://figshare.com/ndownloader/files/58465405/CjePI.species.marisa180000	c1736f256d140c38e14d85fce0d2dc45
-CjePI.species.marisa210000	https://figshare.com/ndownloader/files/58465408/CjePI.species.marisa210000	133169469e6b347f1bd11bbee2ba29ee
-CjePI.species.marisa240000	https://figshare.com/ndownloader/files/58465414/CjePI.species.marisa240000	45b4e6c346a0a9437934752014546613
-CjePI.species.marisa270000	https://figshare.com/ndownloader/files/58465411/CjePI.species.marisa270000	51e6908bec21711b8478622614e2b64c
+CjePI.species.marisa30000	https://figshare.com/ndownloader/files/59371271/CjePI.species.marisa30000	513d8d066958f9bb849c6c50e88b2d13
+CjePI.species.marisa60000	https://figshare.com/ndownloader/files/59371256/CjePI.species.marisa60000	45f82e57b48c918d920b34fa0e7dae1b
+CjePI.species.marisa90000	https://figshare.com/ndownloader/files/59371247/CjePI.species.marisa90000	7e4bd6c84ae182aa26a5dd615e664963
+CjePI.species.marisa120000	https://figshare.com/ndownloader/files/59371238/CjePI.species.marisa120000	ab5940f5114ae86d555b72537e6b1d5c
+CjePI.species.marisa150000	https://figshare.com/ndownloader/files/59371259/CjePI.species.marisa150000	2178aa4ddfdd3d12d5d672dcb4cceddd
+CjePI.species.marisa180000	https://figshare.com/ndownloader/files/59371268/CjePI.species.marisa180000	d3474f2a0c183f22a2fa061422ccb04b
+CjePI.species.marisa210000	https://figshare.com/ndownloader/files/59371265/CjePI.species.marisa210000	56c80e0eac791295b4169e412f8bb49d
+CjePI.species.marisa240000	https://figshare.com/ndownloader/files/59371262/CjePI.species.marisa240000	ca375994571e53c0ac8449bf518b785c
+CjePI.species.marisa270000	https://figshare.com/ndownloader/files/59371274/CjePI.species.marisa270000	b16bb15ca7c84dc7b2f0da590f5eec55
+
 # uniq db
-CjePI.species.uniq.marisa	https://figshare.com/ndownloader/files/58465420/CjePI.species.uniq.marisa	d3eb9adf4574d77a70e318c9d692521b
-CjePI.species.uniq.stat.xls	https://figshare.com/ndownloader/files/58465357/CjePI.species.uniq.stat.xls	cc3b77b33089eb5d02bbd4f391875775
+CjePI.Species.marisa	https://figshare.com/ndownloader/files/59371301/CjePI.Species.marisa	9b7440b9e4a267e84a77fae399220a86
+CjePI.Species.stat.xls	https://figshare.com/ndownloader/files/59371211/CjePI.Species.stat.xls	700293a57b5b4e14244bd6c492822cc8
