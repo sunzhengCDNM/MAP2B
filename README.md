@@ -131,23 +131,26 @@ version:  1.6
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
-### Version 1.6 2025-10-02 by Zheng and Jiang
+### Version 1.7 2025-11-07
+* Human genomes (GRCh38 p.14 and CHM V2.0) are updated in the GTDB and Refseq database
+
+### Version 1.6 2025-10-02
 * Add support for the BcgI enzyme
 * Parameter `-e` is back
 
-### Version 1.5 2023-04-20 by Zheng and Jiang
+### Version 1.5 2023-04-20
 * Minor bug fixes
 
-### Version 1.4 2023-02-27 by Zheng and Jiang
+### Version 1.4 2023-02-27
 * Add optional database: GTDB or RefSeq
 * Minor bug fixes
 
-### Version 1.3 2023-01-17 by Zheng and Jiang
+### Version 1.3 2023-01-17
 * We have simplified our database and modified the main body program to speed up the execution time
 * MAP2B is laptop friendly now! The minimum RAM required is only 14G and the space for the database is reduced to ~15G
 * Cancel `-e` option
 
-### Version 1.2 2022-12-02 by Zheng and Jiang
+### Version 1.2 2022-12-02
 * Minor bug fixes
 * You can set up a G score `-g` directly and ignore the false positive recognition model
 * Coverage information will be generated together with the abundance table
