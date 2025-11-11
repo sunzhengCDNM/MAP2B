@@ -52,11 +52,11 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20230420-conda.yml`.
    
-   `conda env create -n MAP2B.1.6 --file config/MAP2B-20230420-conda.yml`
+   `conda env create -n MAP2B.1.7 --file config/MAP2B-20230420-conda.yml`
    
  * Activate the MAP2B conda environment by running the following command:
  
-   `conda activate MAP2B.1.6` or `source activate MAP2B.1.6`
+   `conda activate MAP2B.1.7` or `source activate MAP2B.1.7`
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
@@ -80,8 +80,8 @@ MAP2B is a highly automatic pipeline, and only a few parameters are required for
  
    `cd example`  
    `mkdir -p data/`  
-   `wget -t 0 -O data/shotgun_MSA-1002_1.fq.gz https://figshare.com/ndownloader/files/38346149/shotgun_MSA-1002_1.fq.gz`  
-   `wget -t 0 -O data/shotgun_MSA-1002_2.fq.gz https://figshare.com/ndownloader/files/38346155/shotgun_MSA-1002_2.fq.gz`  
+   `wget --user-agent="Mozilla/5.0" -t 3 -O data/shotgun_MSA-1002_1.fq.gz https://figshare.com/ndownloader/files/38346149/shotgun_MSA-1002_1.fq.gz`  
+   `wget --user-agent="Mozilla/5.0" -t 3 -O data/shotgun_MSA-1002_2.fq.gz https://figshare.com/ndownloader/files/38346155/shotgun_MSA-1002_2.fq.gz`  
  
 * After downloading the sequencing data, we can finally run MAP2B:  
  
@@ -116,7 +116,7 @@ optional arguments:
 author: Liu Jiang, Zheng Sun
 mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
 last update: 2025/10/01 20:03:47
-version:  1.6
+version:  1.7
 ```
 * If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
 
