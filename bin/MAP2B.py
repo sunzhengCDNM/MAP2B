@@ -15,8 +15,8 @@ enzyme_dic = {1:'CspCI', 2:'AloI', 3:'BsaXI', 4:'BaeI',
 __doc__ = ''
 __author__ = 'Zheng Sun, Liu Jiang'
 __mail__ = 'spzsu@channing.harvard.edu, jiang.liu@oebiotech.com'
-__date__ = '2025/10/02 20:03:47'
-__version__ = '1.6'
+__date__ = '2026/01/06 10:03:47'
+__version__ = '1.7'
 ############################################ main ##################################################
 def report(level, info):
 	date_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -102,13 +102,14 @@ def check_data(data_file):
 def cc_abd(db, abfh, enzyme_smp_file, O, processes, enzyme):
 	exe_shell('python3 {src_dir}/CalculateRelativeAbundance_Single2bEnzyme.py -d {db} -c {abfh} -l {enzyme_smp_file} -o {O} -p {processes} -e {enzyme}'.format(src_dir = src_dir, db = db, abfh = abfh, enzyme_smp_file = enzyme_smp_file, O = O, processes = processes, enzyme = enzyme), 'CalculateRelativeAbundance_Single2bEnzyme')
 
-def extra_tag(reads, enzyme, enzyme_dir, smp):
+def extra_tag(reads, enzyme, enzyme_dir, smp, genome=None):
+	check_dir(enzyme_dir)
 	if len(reads) == 2:
-		exe_shell('perl {src_dir}/2bRADExtraction.pl -i {reads} -t 2 -s {enzyme} -od {enzyme_dir} -op {smp}_1 -qc no'.format(src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
-		exe_shell('perl {src_dir}/2bRADExtraction.pl -i {reads} -t 2 -s {enzyme} -od {enzyme_dir} -op {smp}_2 -qc no'.format(src_dir = src_dir, reads = reads[1], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
+		exe_shell('python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp}_1 -of gzip -g {genome}'.format(genome = genome, src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
+		exe_shell('python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp}_2 -of gzip -g {genome}'.format(src_dir = src_dir, genome = genome, reads = reads[1], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
 		exe_shell('cat {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz >{enzyme_dir}/{smp}.{enzyme}.fa.gz && rm {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz'.format(enzyme = enzyme_dic[enzyme], enzyme_dir = enzyme_dir, smp = smp), 'mergePEReads')
 	else:
-		exe_shell('perl {src_dir}/2bRADExtraction.pl -i {reads} -t 2 -s {enzyme} -od {enzyme_dir} -op {smp} -qc no'.format(src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
+		exe_shell('python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp} -of gzip -g {genome}'.format(genome = genome, src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
 	return
 
 def main():
@@ -129,6 +130,7 @@ def main():
 	parser.add_argument('-p',help='Number of processes, note that more threads may require more memory, default 1',dest='processes',type=int,default=1)
 	parser.add_argument('-g',help='Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none',dest='gscore',type=int,required=False)
 	parser.add_argument('-c',help='cut off for database, default 30000',dest='cutoff',type=int,default=30000)
+	parser.add_argument('-gm',help='Genome files, when the provided reads are in the aligned CRAM format',dest='genome',type=str,required=False)
 
 	args=parser.parse_args()
 	enzyme_id = args.enzyme
@@ -155,7 +157,10 @@ def main():
 		with open(enzyme_smp_file, 'w') as OUT:
 			for smp, reads in data_dic.items():
 				OUT.write('{smp}\t{enzyme_dir}/{smp}/{smp}.{enzyme}.fa.gz\n'.format(enzyme_dir = enzyme_dir, smp = smp, enzyme = enzyme))
-				pool.append(executor.submit(extra_tag, reads, enzyme_id, (enzyme_dir + '/' + smp), smp))
+				if args.genome:
+					pool.append(executor.submit(extra_tag, reads, enzyme, (enzyme_dir + '/' + smp), smp, args.genome))
+				else:
+					pool.append(executor.submit(extra_tag, reads, enzyme, (enzyme_dir + '/' + smp), smp))
 		executor.shutdown()
 		for res in pool:
 			res.result()
@@ -242,8 +247,9 @@ def main():
 	if os.path.exists(done_file):
 		pass
 	else:
-		exe_shell('perl {}/MergeProfilesFromMultipleSamples.pl -l {} -o {} -p Abundance -m -c'.format(src_dir, abd_list, O), 'MergeProfilesFromMultipleSamples')
-		exe_shell('python3 {}/MergeCoverageFromMultipleSamples.py -i {} -o {}/Coverage.xls'.format(src_dir, abd_list, O), 'MergeCoverageFromMultipleSamples')
+		exe_shell('perl {src_dir}/MergeProfilesFromMultipleSamples.pl -l {abd_list} -o {O} -p Abundance.tmp -m -c && python3 {src_dir}/filter_host.py -i {O}Abundance.tmp.xls -o {O}Abundance.xls'.format(src_dir=src_dir, abd_list=abd_list, O=O), 'MergeProfilesFromMultipleSamples')
+		exe_shell('python3 {src_dir}/MergeCoverageFromMultipleSamples.py -i {abd_list} -o {O}/Coverage.tmp.xls && python3 {src_dir}/filter_host.py -i {O}/Coverage.tmp.xls -o {O}/Coverage.xls'.format(src_dir=src_dir, abd_list=abd_list, O=O), 'MergeCoverageFromMultipleSamples')
+		exe_shell('rm -f {O}Abundance.tmp.xls {O}/Coverage.tmp.xls'.format(O=O), 'Cleaning')
 		exe_shell('touch {}'.format(done_file), 'all_done')
 	report('INFO', 'Congratulations, all work has been completed')
 
