@@ -1,0 +1,13 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - perl=5.26.2
+  - perl-parallel-forkmanager=2.02
+  - python=3.9
+  - joblib=1.5.1
+  - scikit-learn=0.24.1
+  - pandas=2.3.1
+  - marisa-trie=0.7.7
+  - pysam=0.23.3
