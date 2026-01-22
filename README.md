@@ -50,13 +50,13 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
    
    `conda update conda`
    
-   Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20230420-conda.yml`.
+   Once you have conda installed, create a conda environment with the yml file `config/MAP2B-20260106-conda.yml`.
    
-   `conda env create -n MAP2B.1.7 --file config/MAP2B-20230420-conda.yml`
+   `conda env create -n MAP2B.1.8 --file config/MAP2B-20260106-conda.yml`
    
  * Activate the MAP2B conda environment by running the following command:
  
-   `conda activate MAP2B.1.7` or `source activate MAP2B.1.7`
+   `conda activate MAP2B.1.8` or `source activate MAP2B.1.8`
    
    Make sure the conda environment of MAP2B has been activated by running the above command before you run MAP2B everytime.  
 
@@ -99,24 +99,24 @@ sample3 ...
 The main program is `bin/MAP2B.py` in this repo. You can check out the usage by printing the help information via `python3 bin/MAP2B.py -h`.
 
 ```
-usage: MAP2B.py [-h] -i INPUT [-o OUTPUT] [-d DATABASE] [-p PROCESSES]
-                [-g GSCORE]
+usage: MAP2B.py [-h] -i INPUT [-o OUTPUT] [-e {5,13}] [-s {GTDB,RefSeq}] [-d DATABASE] [-p PROCESSES] [-g GSCORE] [-c CUTOFF] [-gm GENOME]
 
 optional arguments:
-  -h, --help    show this help message and exit
-  -i INPUT      The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. The line in this file that begins with # will be ignored. 
-                  sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
-  -e enzyme	5: BcgI, 13 CjepI, default 5
-  -o OUTPUT     Output directory, default ./MAP2B_result
+  -h, --help        show this help message and exit
+    -i INPUT          The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
+  -o OUTPUT         Output directory, default /data/USER/liujiang/pipeline/MAP2B/github/MAP2B.v2/bin/MAP2B_result
+  -e {5,13}         Enzyme, choose from 5(BcgI) or 13(CjePI), default 13
   -s {GTDB,RefSeq}  Data source, choose from GTDB or RefSeq, default GTDB
-  -d DATABASE   Database path for MAP2B pipeline, MAP2B_path/database
-  -p PROCESSES  Number of processes, note that more threads may require more memory, default 1
-  -g GSCORE     Using G score as the threshold for species identification, -g 5 is recommended for low-biomass samples. Enabling G score will automatically shutdown false positive recognition model, default none
+  -d DATABASE       Database path for MAP2B pipeline, default /data/USER/liujiang/pipeline/MAP2B/github/MAP2B.v2/database
+  -p PROCESSES      Number of processes, note that more threads may require more memory, default 1
+  -g GSCORE         Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none
+  -c CUTOFF         cut off for database, default 30000
+  -gm GENOME        Genome files, when the provided reads are in the aligned CRAM format
 
-author: Liu Jiang, Zheng Sun
-mail: jiang.liu@oebiotech.com, spzsu@channing.harvard.edu
-last update: 2025/10/01 20:03:47
-version:  1.7
+author:	Zheng Sun, Liu Jiang
+mail:	spzsu@channing.harvard.edu, jiang.liu@oebiotech.com
+last update: 2026/01/06 20:03:47
+version:  1.8
 ```
 * If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
 
@@ -131,6 +131,10 @@ version:  1.7
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
+### Version 1.8 2026-01-22
+* Now it support CRAM format
+* Minor bug fixes
+
 ### Version 1.7 2025-11-07
 * Human genomes (GRCh38 p.14 and CHM V2.0) are updated in the GTDB and Refseq database
 
