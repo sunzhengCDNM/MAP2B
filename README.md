@@ -131,9 +131,9 @@ version:  1.8
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
-### Version 1.8 2026-01-22
-* Now it support CRAM format
+### Version 1.8 2026-03-10
 * Minor bug fixes
+* Now it support CRAM format
 
 ### Version 1.7 2025-11-07
 * Human genomes (GRCh38 p.14 and CHM V2.0) are updated in the GTDB and Refseq database
