@@ -1,0 +1,14 @@
+parameter	value
+analysis_seed	20260722
+prevalence_cutoff	0.1
+boruta_p_value	0.01
+boruta_multiple_testing_adjustment	TRUE
+boruta_max_runs	200
+boruta_tentative_features	excluded
+wilcoxon_fallback_threshold	5
+wilcoxon_fallback_features	10
+tuning_trees	100
+final_trees	500
+terminal_node_size	5
+abundance_md5	c966f93ac406949bfaf3ac1415dc7e4f
+coverage_md5	2fbd35a262e2ea69a47154eee1b642d1

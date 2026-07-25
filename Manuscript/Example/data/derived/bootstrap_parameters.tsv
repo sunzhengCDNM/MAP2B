@@ -1,0 +1,6 @@
+parameter	value
+bootstrap_seed	20260722
+n_bootstrap	2000
+sampling	class-stratified resampling of fixed out-of-fold predictions
+curve_grid_points	201
+curve_interval	pointwise 95% percentile interval

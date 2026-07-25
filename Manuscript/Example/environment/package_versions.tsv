@@ -1,0 +1,11 @@
+package	version
+R	4.5.2
+renv	1.2.3
+data.table	1.18.0
+randomForest	4.7.1.2
+Boruta	9.0.0
+matrixTests	0.2.3.1
+pROC	1.19.0.1
+PRROC	1.4
+ggplot2	4.0.1
+patchwork	1.3.2

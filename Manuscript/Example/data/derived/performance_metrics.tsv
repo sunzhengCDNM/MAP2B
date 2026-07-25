@@ -1,0 +1,5 @@
+data_type	comparison	model	positive_status	n_samples	n_positive	n_negative	auroc	auprc
+Abundance	Nor_vs_Ca	Boruta_RF	Ca	30	15	15	0.953333333333333	0.963734373162077
+Abundance	CIN_vs_Ca	Boruta_RF	Ca	30	15	15	0.962222222222222	0.949225061874515
+Coverage	Nor_vs_Ca	Boruta_RF	Ca	30	15	15	0.982222222222222	0.985582074327926
+Coverage	CIN_vs_Ca	Boruta_RF	Ca	30	15	15	0.991111111111111	0.991916717091142
