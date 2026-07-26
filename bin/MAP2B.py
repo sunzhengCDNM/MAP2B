@@ -125,8 +125,8 @@ def main():
 #	[2]AloI   [6]CjeI  [10]FalI    [14]Hin4I\n \
 #	[3]BsaXI  [7]PpiI  [11]Bsp24I  [15]AlfI\n \
 #	[4]BaeI   [8]PsrI  [12]HaeIV   [16]BslFI',dest='enzyme',type=int,default=13)
-	parser.add_argument('-s',help='Data source, choose from GTDB or RefSeq, default GTDB',dest='source',type=str,choices=['GTDB', 'RefSeq'],default='GTDB')
-	parser.add_argument('-d',help='Database path for MAP2B pipeline, default {}'.format(def_db_dir),dest='database',type=str,default=def_db_dir)
+	parser.add_argument('-s',help='Database. Specify either GTDB or RefSeq as the pre-built database. For custom databases, provide the absolute path to the database directory, which must contain marisa database files prefixed with BcgI or CjePI., default GTDB',dest='source',type=str,default='GTDB')
+#	parser.add_argument('-d',help='Database path for MAP2B pipeline, default {}'.format(def_db_dir),dest='database',type=str,default=def_db_dir)
 	parser.add_argument('-p',help='Number of processes, note that more threads may require more memory, default 1',dest='processes',type=int,default=1)
 	parser.add_argument('-g',help='Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none',dest='gscore',type=int,required=False)
 	parser.add_argument('-c',help='cut off for database, default 30000',dest='cutoff',type=int,default=30000)
@@ -136,9 +136,12 @@ def main():
 	enzyme_id = args.enzyme
 #	enzyme_id = 13
 	enzyme = enzyme_dic[enzyme_id]
-	db_dir = check_dir((args.database + '/' + args.source))
-	# check database
-	check_db(db_dir, enzyme, args.source)
+	if args.source in ['GTDB', 'RefSeq']:
+		db_dir = check_dir((def_db_dir + '/' + args.source))
+		# check database
+		check_db(db_dir, enzyme, args.source)
+	else:
+		db_dir = check_dir(args.source)
 	O = check_dir(args.output)
 	# prepare data
 	data_dic = check_data(check_file(args.input))
