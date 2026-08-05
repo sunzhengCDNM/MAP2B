@@ -7,12 +7,12 @@ value: 序列id__序列方向__位置索引（序列位置索引从 0 开始，�
 
 """
 ########################################## import ################################################
-import argparse, os, sys, marisa_trie, gzip, re, collections, math
+import argparse, os, sys, marisa_trie, gzip, re, collections, math, time
 from datetime import datetime
 ############################################ ___ #################################################
 __doc__ = '多线程、多存储结构的电子酶切脚本'
-__author__ = 'Zheng and Jiang'
-__mail__ = 'spzsu@channing.harvard.edu'
+__author__ = 'Liu Jiang'
+__mail__ = 'jiang.liu@oebiotech.com'
 __date__ = '2024/06/01 23:33:25'
 __version__ = '1.1'  # 版本更新
 ############################################ main ##################################################
@@ -42,8 +42,41 @@ def check_file(file):
         info = f"file does not exist: {file}"
         report("ERROR", info)
 
+def ensure_cram_index(cram):
+    """确保 CRAM 文件的 .crai 索引存在，使用文件锁保证多进程安全。"""
+    index_file = cram + '.crai'
+    if os.path.exists(index_file):
+        return
+
+    lock_file = cram + '.indexing.lock'
+    max_wait = 120  # 最长等待 120 秒
+
+    for _ in range(max_wait):
+        try:
+            fd = os.open(lock_file, os.O_CREAT | os.O_EXCL | os.O_RDWR)
+            # 获取到锁，再次检查索引是否已被其他进程创建
+            try:
+                if not os.path.exists(index_file):
+                    import pysam
+                    pysam.index(cram)
+            finally:
+                os.close(fd)
+                try:
+                    os.unlink(lock_file)
+                except OSError:
+                    pass
+            return
+        except OSError:
+            # 锁被其他进程持有，等待并检查索引是否已出现
+            time.sleep(1)
+            if os.path.exists(index_file):
+                return
+
+    report('ERROR', '等待 CRAM 索引创建超时: {}'.format(cram))
+
 def read_cram(cram, fasta):
     import pysam
+    ensure_cram_index(cram)
     with pysam.AlignmentFile(cram, mode="rc", reference_filename=fasta, require_index=True) as IN:
         for read in IN.fetch():
             yield read.query_name, read.seq

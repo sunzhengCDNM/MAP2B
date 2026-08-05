@@ -40,34 +40,37 @@ def main():
 		epilog='author:\t{0}\nmail:\t{1}\ndate:\t{2}\nversion:\t{3}'.format(__author__,__mail__,__date__,__version__))
 	parser.add_argument('-d',help='database prefix, like CjePI.species',dest='database',type=str,required=True)
 	parser.add_argument('-c',help='classfy file',dest='classfy',type=str,required=True)
-	parser.add_argument('-p',help='pred file',dest='pred',type=str,required=True)
+	parser.add_argument('-p',help='pred file',dest='pred',type=str,required=False)
 	parser.add_argument('-s',help='the size of the sub-db when the master database is built',dest='size',type=int,required=True)
 	parser.add_argument('-o',help='out_database prefix',dest='output',type=str,required=True)
-	parser.add_argument('-e',help='enzyme, choose from BcgI and CjePI',dest='enzyme',choices=['BcgI', 'CjePI'],type=str,required=True)
+	parser.add_argument('-e',help='enzyme, choose from BsaXI, BcgI and CjePI',dest='enzyme',choices=['BsaXI', 'BcgI', 'CjePI'],type=str,required=True)
 	parser.add_argument('-n',help='copy number for tag, choos from s(ingle) and m(ultiple)',dest='copy',choices=['s', 'm'],type=str,required=True)
 	args=parser.parse_args()
 	info = "runing..."
 	report("INFO",info)
 	spe_lst = []
-	enzyme_dic = {'CjePI':27, 'BcgI':32}
+	enzyme_dic = {'CjePI':27, 'BcgI':32, 'BsaXI':27}
 	marisa_file = '{}.marisa'.format(args.output)
 	stat_file = '{}.stat.xls'.format(args.output)
 	fmt = '{}c'.format(enzyme_dic[args.enzyme])
 
-	with open(check_file(args.pred),'r') as IN:
-		for line in IN:
-			line = line.strip()
-			if line.startswith('Species\t') or not line:continue
-			tmp = line.split('\t')
-			if int(tmp[-2]) == 1:
-				spe_lst.append(tmp[0])
+	if args.pred:
+		with open(check_file(args.pred),'r') as IN:
+			for line in IN:
+				line = line.strip()
+				if line.startswith('Species\t') or not line:continue
+				tmp = line.split('\t')
+				if int(tmp[-2]) == 1:
+					spe_lst.append(tmp[0])
 	ID_spe_dic = {} # {ID:spe}
 	with gzip.open(check_file(args.classfy), 'rt') as IN:
 		for line in IN:
 			line = line.strip()
 			if line.startswith('#') or not line:continue
 			tmp = line.split('\t')
-			if tmp[7] in spe_lst:
+			if args.pred and tmp[7] in spe_lst:
+				ID_spe_dic.setdefault(tmp[0], '\t'.join(tmp[1:8]))
+			elif not args.pred:
 				ID_spe_dic.setdefault(tmp[0], '\t'.join(tmp[1:8]))
 	tag_sID_dic = {} # {tag:[sID]}
 	subdb_ID_dic = ID_subdb(args.size, ID_spe_dic.keys())
@@ -119,7 +122,7 @@ def main():
 		spe_theo_tag_num_dic[spe] = round(sum(t)/len(t), 4)
 	with open(stat_file, 'w') as OUT:
 		for ID in sorted(ID_theo_tag_num_dic.keys()):
-			OUT.write('{}\t{}\t{}\t{}\n'.format(ID, ID_spe_dic[ID], ID_theo_tag_num_dic[ID], spe_theo_tag_num_dic[ID_spe_dic[ID]]))
+			OUT.write('{}\t{}\t{}\t{}\n'.format(ID, ','.join(ID_spe_dic[ID].split('\t')), ID_theo_tag_num_dic[ID], spe_theo_tag_num_dic[ID_spe_dic[ID]]))
 
 if __name__=="__main__":
 	main()
