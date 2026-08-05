@@ -104,12 +104,20 @@ def cc_abd(db, abfh, enzyme_smp_file, O, processes, enzyme):
 
 def extra_tag(reads, enzyme, enzyme_dir, smp, genome=None):
 	check_dir(enzyme_dir)
+	genome_opt = ' -g {}'.format(genome) if genome else ''
 	if len(reads) == 2:
-		exe_shell('python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp}_1 -of gzip -g {genome}'.format(genome = genome, src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
-		exe_shell('python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp}_2 -of gzip -g {genome}'.format(src_dir = src_dir, genome = genome, reads = reads[1], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
-		exe_shell('cat {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz >{enzyme_dir}/{smp}.{enzyme}.fa.gz && rm {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz'.format(enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), 'mergePEReads')
+		cmd1 = 'python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp}_1 -of gzip{genome_opt}'.format(
+			src_dir=src_dir, reads=reads[0], enzyme=enzyme, enzyme_dir=enzyme_dir, smp=smp, genome_opt=genome_opt)
+		exe_shell(cmd1, '2bRADExtraction')
+		cmd2 = 'python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp}_2 -of gzip{genome_opt}'.format(
+			src_dir=src_dir, reads=reads[1], enzyme=enzyme, enzyme_dir=enzyme_dir, smp=smp, genome_opt=genome_opt)
+		exe_shell(cmd2, '2bRADExtraction')
+		exe_shell('cat {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz >{enzyme_dir}/{smp}.{enzyme}.fa.gz && rm {enzyme_dir}/{smp}_1.{enzyme}.fa.gz {enzyme_dir}/{smp}_2.{enzyme}.fa.gz'.format(
+			enzyme=enzyme, enzyme_dir=enzyme_dir, smp=smp), 'mergePEReads')
 	else:
-		exe_shell('python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp} -of gzip -g {genome}'.format(genome = genome, src_dir = src_dir, reads = reads[0], enzyme = enzyme, enzyme_dir = enzyme_dir, smp = smp), '2bRADExtraction')
+		cmd = 'python3 {src_dir}/sequence_digestion.py -i {reads} -e {enzyme} -o {enzyme_dir}/{smp} -of gzip{genome_opt}'.format(
+			src_dir=src_dir, reads=reads[0], enzyme=enzyme, enzyme_dir=enzyme_dir, smp=smp, genome_opt=genome_opt)
+		exe_shell(cmd, '2bRADExtraction')
 	return
 
 def main():
@@ -119,13 +127,13 @@ def main():
 	parser.add_argument('-i',help='The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like \n \
 	sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)',dest='input',type=str,required=True)
 	parser.add_argument('-o',help='Output directory, default {}/MAP2B_result'.format(os.getcwd()),dest='output',type=str,default='{}/MAP2B_result'.format(os.getcwd()))
-	parser.add_argument('-e',help='Enzyme, choose from 5(BcgI) or 13(CjePI), default 13',dest='enzyme',type=int,choices=[5, 13],default=13)
+	parser.add_argument('-e',help='Enzyme, choose from 3(BsaXI), 5(BcgI) or 13(CjePI), default 13',dest='enzyme',type=int,choices=[3, 5, 13],default=13)
 #	parser.add_argument('-e',help='enzyme, default 13 for CjePI, choose from\n \
 #	[1]CspCI  [5]BcgI  [9]BplI     [13]CjePI  [17]AllEnzyme\n \
 #	[2]AloI   [6]CjeI  [10]FalI    [14]Hin4I\n \
 #	[3]BsaXI  [7]PpiI  [11]Bsp24I  [15]AlfI\n \
 #	[4]BaeI   [8]PsrI  [12]HaeIV   [16]BslFI',dest='enzyme',type=int,default=13)
-	parser.add_argument('-s',help='Database. Specify either GTDB or RefSeq as the pre-built database. For custom databases, provide the absolute path to the database directory, which must contain marisa database files prefixed with BcgI or CjePI., default GTDB',dest='source',type=str,default='GTDB')
+	parser.add_argument('-s',help='Database. Specify either GTDB or RefSeq as the pre-built database. For custom databases, provide the absolute path to the database directory, which must contain marisa database files prefixed with enzyme, default GTDB',dest='source',type=str,default='GTDB')
 #	parser.add_argument('-d',help='Database path for MAP2B pipeline, default {}'.format(def_db_dir),dest='database',type=str,default=def_db_dir)
 	parser.add_argument('-p',help='Number of processes, note that more threads may require more memory, default 1',dest='processes',type=int,default=1)
 	parser.add_argument('-g',help='Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none',dest='gscore',type=int,required=False)
