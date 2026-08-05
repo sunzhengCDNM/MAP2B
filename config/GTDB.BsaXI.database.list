@@ -1,0 +1,17 @@
+# taxonomy
+abfh_classify_with_speciename.txt.gz	https://zenodo.org/records/18959558/files/abfh_classify_with_speciename.txt.gz	55ddac6a94bf269a9a236d6888f1193c
+
+# main db
+BsaXI.species.marisa30000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa30000	8c72b8ada6d077746f355284f3da0709
+BsaXI.species.marisa60000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa60000	8e835fe966590f181f09349c1ceb6168
+BsaXI.species.marisa90000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa90000	bd468888514a4374a3c7c4cdab9a33ba
+BsaXI.species.marisa120000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa120000	bba440b0f594bdf85e5fa6645993a9e3
+BsaXI.species.marisa150000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa150000	f4c24199ece1d12807aef8758ab79280
+BsaXI.species.marisa180000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa180000	8e6cf4a86e99160d214675e407716481
+BsaXI.species.marisa210000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa210000	2c1adb8109fa38c42d0b262442214734
+BsaXI.species.marisa240000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa240000	495132914af8a3a7433eee8a30622dd6
+BsaXI.species.marisa270000	https://zenodo.org/records/21796385/files/BsaXI.species.marisa270000	605a84d4e65ce2718c38d2d237ed8092
+
+# uniq db
+BsaXI.species.uniq.marisa	https://zenodo.org/records/21796385/files/BsaXI.Species.marisa	51025e15be6aa7ad74b859a4bd56560f
+BsaXI.species.uniq.stat.xls	https://zenodo.org/records/21796385/files/BsaXI.Species.stat.xls	25647dc86faeddf9333f5f46dbe0da62
