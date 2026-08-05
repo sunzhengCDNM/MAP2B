@@ -62,11 +62,11 @@ All scripts in MAP2B are programmed by Perl and Python, and execution of MAP2B i
 
  * The workflow begins by checking the database's existence, and if it is not found, the corresponding database will be downloaded automatically to the software installation path. This download process may take some time, but it ensures that the necessary databases are readily available for the workflow. Alternatively, you can also download the GTDB database and RefSeq database independently using the following commands:
  
-   * for GTDB database
+   * for GTDB (e.g., CjePI, you can change it with BsaXI or BcgI) database
  
       `python3 scripts/DownloadDB.py -l config/GTDB.CjePI.database.list -d database/GTDB`
 	   
-   * for RefSeq database
+   * for RefSeq (e.g., CjePI, you can change it with BsaXI or BcgI) database
 	 
       `python3 scripts/DownloadDB.py -l config/RefSeq.CjePI.database.list -d database/RefSeq`
     
@@ -105,9 +105,8 @@ optional arguments:
   -h, --help        show this help message and exit
     -i INPUT          The filepath of the sample list. Each line includes an input sample ID and the file path of corresponding DNA sequence data where each field should be separated by <tab>. A line in this file that begins with # will be ignored. like sample <tab> shotgun.1.fq(.gz) (<tab> shotgun.2.fq.gz)
   -o OUTPUT         Output directory, default /data/USER/liujiang/pipeline/MAP2B/github/MAP2B.v2/bin/MAP2B_result
-  -e {5,13}         Enzyme, choose from 5(BcgI) or 13(CjePI), default 13
-  -s {GTDB,RefSeq}  Data source, choose from GTDB or RefSeq, default GTDB
-  -d DATABASE       Database path for MAP2B pipeline, default /data/USER/liujiang/pipeline/MAP2B/github/MAP2B.v2/database
+  -e {3,5,13}       Enzyme, choose from 3 (BsaXI), 5(BcgI), or 13(CjePI), default 13
+  -s {GTDB,RefSeq}  Specify either GTDB or RefSeq as the pre-built database. For custom databases, provide the absolute path to the database directory, which must contain marisa database files prefixed with enzyme, default GTDB
   -p PROCESSES      Number of processes, note that more threads may require more memory, default 1
   -g GSCORE         Using G score as the threshold for species identification, -g 5 is recommended. Enabling G score will automatically shutdown false positive recognition model, default none
   -c CUTOFF         cut off for database, default 30000
@@ -115,7 +114,7 @@ optional arguments:
 
 author:	Zheng Sun, Liu Jiang
 mail:	spzsu@channing.harvard.edu, jiang.liu@oebiotech.com
-last update: 2026/01/06 20:03:47
+last update: 2026/08/05
 version:  1.8
 ```
 * If you are dealing with low-biomass samples, we recommend using the `-g 3` or `-g 5` parameters to keep as many species as possible. Although false positive detection is still a challenge for low-biomass samples, please keep in mind that the G-score ranking is highly relevant to the likelihood that a species is a true positive. Then, you can set up a threshold for G-score based on your understanding. 
@@ -131,6 +130,9 @@ version:  1.8
 This work was supported by the National Institutes of Health grant number R01AI141529, R01HD093761, RF1AG067744, UH3OD023268, U19AI095219, U01HL089856, and the Charles A. King Trust Postdoctoral Fellowship. 
 
 ## What's new
+### Version 1.8 2026-08-5
+* Update BsaXI in the database
+
 ### Version 1.8 2026-03-10
 * Minor bug fixes
 * Now it support CRAM format
