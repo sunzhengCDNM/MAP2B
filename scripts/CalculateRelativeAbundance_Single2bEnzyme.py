@@ -39,7 +39,8 @@ def check_dir(dir):
 		report("INFO",info)
 	return(dir)
 
-def qual(outdir, smp, fasta):
+#def qual(outdir, smp, fasta, enzyme, tag_gcf_trie, gcf_tax_dic, gcf_theo_tag_num_dic, tax_theo_tag_num_dic):
+def qual(outdir, smp, fasta, enzyme):
 	report('INFO', f"for sample {smp}")
 	transtable = str.maketrans('ATGCN', 'TACGN')
 	gcf_count_dic = {} # {gcf:{tag:seq_num}}
@@ -73,14 +74,31 @@ def qual(outdir, smp, fasta):
 			for tag, tag_count in tag_count_dic.items():
 				tmp_tax_reads_count_dic = tax_reads_count_dic.setdefault(tax, {})
 				tmp_tax_reads_count_dic.setdefault(tag, tag_count)
-			OUT.write('{}\t{}\t{}\t{}\t{}\n'.format(tax, gcf, theo_tag_num, dete_tag_num, round(dete_tag_num/theo_tag_num, 4)))
+			OUT.write('{}\t{}\t{}\t{}\t{}\n'.format(
+				tax,
+				gcf,
+				theo_tag_num,
+				dete_tag_num,
+				round(dete_tag_num/theo_tag_num, 4)
+				)
+			)
 	with open(f"{outdir}/{smp}.{enzyme}.xls", 'w') as OUT:
 		OUT.write('#Kingdom\tPhylum\tClass\tOrder\tFamily\tGenus\tSpecies\tTheoretical_Tag_Num\tSequenced_Tag_Num\tPercent\tSequenced_Reads_Num\tSequenced_Reads_Num/Theoretical_Tag_Num\tSequenced_Reads_Num/Sequenced_Tag_Num\tSequenced_Tag_Num(depth>1)\tG_Score\n')
 		for tax in tax_tag_count_dic:
 			Theoretical_Tag_Num = float(tax_theo_tag_num_dic[tax])
 			Sequenced_Tag_Num = len(tax_tag_count_dic[tax])
 			Sequenced_Reads_Num = sum(tax_reads_count_dic[tax].values())
-			OUT.write('{tax}\t{Theoretical_Tag_Num}\t{Sequenced_Tag_Num}\t{Percent}\t{Sequenced_Reads_Num}\t{Sequenced_Reads_Num__Theoretical_Tag_Num}\t{Sequenced_Reads_Num__Sequenced_Tag_Num}\tNA\t{G_Score}\n'.format(tax = tax, Theoretical_Tag_Num = Theoretical_Tag_Num, Sequenced_Tag_Num = Sequenced_Tag_Num, Percent = round(Sequenced_Tag_Num/Theoretical_Tag_Num, 4), Sequenced_Reads_Num = Sequenced_Reads_Num, Sequenced_Reads_Num__Theoretical_Tag_Num = round(Sequenced_Reads_Num/Theoretical_Tag_Num, 4), Sequenced_Reads_Num__Sequenced_Tag_Num = round(Sequenced_Reads_Num/Sequenced_Tag_Num, 4), G_Score = round(sqrt(Sequenced_Tag_Num*Sequenced_Reads_Num), 4)))
+			OUT.write('{tax}\t{Theoretical_Tag_Num}\t{Sequenced_Tag_Num}\t{Percent}\t{Sequenced_Reads_Num}\t{Sequenced_Reads_Num__Theoretical_Tag_Num}\t{Sequenced_Reads_Num__Sequenced_Tag_Num}\tNA\t{G_Score}\n'.format(
+				tax = tax,
+				Theoretical_Tag_Num = Theoretical_Tag_Num,
+				Sequenced_Tag_Num = Sequenced_Tag_Num,
+				Percent = round(Sequenced_Tag_Num/Theoretical_Tag_Num, 4),
+				Sequenced_Reads_Num = Sequenced_Reads_Num,
+				Sequenced_Reads_Num__Theoretical_Tag_Num = round(Sequenced_Reads_Num/Theoretical_Tag_Num, 4),
+				Sequenced_Reads_Num__Sequenced_Tag_Num = round(Sequenced_Reads_Num/Sequenced_Tag_Num, 4),
+				G_Score = round(sqrt(Sequenced_Tag_Num*Sequenced_Reads_Num), 4)
+				)
+			)
 
 def main():
 	parser=argparse.ArgumentParser(description=__doc__,
@@ -93,7 +111,7 @@ def main():
 	parser.add_argument('-o',help='output dir',dest='output',type=str,required=True)
 	parser.add_argument('-p',help='number of processes used',dest='processes',type=int,default=1)
 	args=parser.parse_args()
-	global enzyme, gcf_theo_tag_num_dic, tax_theo_tag_num_dic, gcf_tax_dic, tag_gcf_trie
+	global gcf_theo_tag_num_dic, tax_theo_tag_num_dic, gcf_tax_dic, tag_gcf_trie
 
 # reading classify file
 	report('INFO', 'Start reading classify file')
@@ -121,8 +139,14 @@ def main():
 			line = line.strip()
 			if line.startswith('#') or not line:continue
 			tmp = line.split('\t')
-			gcf_theo_tag_num_dic.setdefault(tmp[0], tmp[8])
-			tax_theo_tag_num_dic.setdefault('\t'.join(tmp[1:8]), tmp[9])
+			if len(tmp) > 5:
+				# 11-column format: taxonomy is already tab-separated (columns 2-8)
+				tax = '\t'.join(tmp[1:8])
+			else:
+				# 5-column format (legacy): taxonomy is comma-separated in column 2
+				tax = '\t'.join(tmp[1].split(','))
+			gcf_theo_tag_num_dic.setdefault(tmp[0], tmp[-3])
+			tax_theo_tag_num_dic.setdefault(tax, tmp[-2])
 	report('INFO', 'End of reading database')
 
 # qual
@@ -135,7 +159,17 @@ def main():
 			if line.startswith('#') or not line:continue
 			tmp = line.split('\t')
 			outdir = check_dir('{}/{}'.format(args.output, tmp[0]))
-			pool.append(executor.submit(qual, outdir, tmp[0], tmp[1]))
+			pool.append(executor.submit(
+				qual, 
+				outdir, 
+				tmp[0], 
+				tmp[1], 
+				args.enzyme,
+#				tag_gcf_trie, 
+#				gcf_tax_dic, 
+#				gcf_theo_tag_num_dic, 
+#				tax_theo_tag_num_dic
+			))
 	executor.shutdown()
 	for res in pool:
 		res.result()

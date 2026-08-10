@@ -122,7 +122,7 @@ def main():
 		spe_theo_tag_num_dic[spe] = round(sum(t)/len(t), 4)
 	with open(stat_file, 'w') as OUT:
 		for ID in sorted(ID_theo_tag_num_dic.keys()):
-			OUT.write('{}\t{}\t{}\t{}\n'.format(ID, ','.join(ID_spe_dic[ID].split('\t')), ID_theo_tag_num_dic[ID], spe_theo_tag_num_dic[ID_spe_dic[ID]]))
+			OUT.write('{}\t{}\t{}\t{}\n'.format(ID, ID_spe_dic[ID], ID_theo_tag_num_dic[ID], spe_theo_tag_num_dic[ID_spe_dic[ID]]))
 
 if __name__=="__main__":
 	main()
